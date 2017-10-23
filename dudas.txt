@@ -1,0 +1,20 @@
+* La fecha debe ser string u otra cosa
+
+* Usamos hash o arbol para metodo fechas. Son muchos o pocos mails a manejar
+
+* Puede haber dos emails exactamente igualess?
+
+* email.date si o si tiene que ser string?
+
+* el id viene con el mail o el manager lo tiene que asignar
+
+* pa quel to?
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////TENER EN CUENTA///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+- Sacar nodos de palabras/fechas/remitentes al eliminar algun email
