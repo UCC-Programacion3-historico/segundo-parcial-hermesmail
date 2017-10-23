@@ -1,4 +1,5 @@
 #include "MailManager.h"
+#include "Estructuras_Datos/ArbolBinario.h"
 
 /**
  * Constructor
@@ -13,7 +14,27 @@ MailManager::MailManager() {
  * @param m mail a agregar
  */
 void MailManager::addMail(email m) {
+    lista_Emails.insertarPrimero(m);
+    arbol_Remitentes.put(m.from, lista_Emails.getInicio());
 
+    string tmp = m.subject + ' ' + m.content;
+    ArbolBinario<string> lasPalabras;
+    for (int i = 0; tmp[i] != nullptr; ++i) {
+        string palabra = nullptr;
+        while (tmp[i] != ' ') {
+            //may min puntos etc.
+            palabra += tmp[i];
+            i++;
+        }
+        if (palabra != nullptr)
+            lasPalabras.put(palabra);
+    }
+    Cola<string> colaPalabras;
+    lasPalabras.encola_preorden(colaPalabras);
+    while (!colaPalabras.esVacia())
+        arbol_Diccionario.put(colaPalabras.desencolar(), lista_Emails.getInicio());
+
+    //FALTA VER SI HASH O ARBOL PARA LAS FECHAS
 }
 
 
@@ -55,7 +76,12 @@ vector<email> MailManager::getSortedByDate(string desde, string hasta) {
  */
 vector<email> MailManager::getSortedByFrom() {
     vector<email> ret;
+    Cola<email> tmp;
+    arbol_Remitentes.inorder(tmp);
+    while (!tmp.esVacia())
+        ret.push_back(tmp.desencolar());
     return ret;
+    ///REVISAR
 }
 
 

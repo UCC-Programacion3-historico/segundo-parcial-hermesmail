@@ -44,8 +44,10 @@ public:
 
     void insertarPrimero(T dato);
     //Es mas eficiente insertar al principio que al final
-    
+
     void remover(/*vaya uno a saber*/);
+
+    T getDato(unsigned int);
 };
 
 template<class T>

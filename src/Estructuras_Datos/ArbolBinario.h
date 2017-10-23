@@ -2,8 +2,10 @@
 // Created by nelon on 23/10/2017.
 //
 
-#ifndef MAILMANAGER_ARBOL_H
-#define MAILMANAGER_ARBOL_H
+#ifndef MAILMANAGER_ARBOLBINARIO_H
+#define MAILMANAGER_ARBOLBINARIO_H
+
+#include "Cola.h"
 
 template<class T>
 class NodoArbol {
@@ -20,6 +22,8 @@ public:
     NodoArbol<T> *remover(T d);
 
     void inorder(); //ver tipo de retorno
+
+    void encola_preorden(Cola<T> &);
 };
 
 template<class T>
@@ -99,7 +103,79 @@ void NodoArbol<T>::inorder() {
     if (izq != nullptr)izq->inorder();
     //cout << dato << ", ";
     if (der != nullptr)der->inorder();
+}
+
+template<class T>
+void NodoArbol<T>::encola_preorden(Cola<T> &R) {
+    R.encolar(this->dato);
+    if (izq != nullptr) izq->encola_preorden(R);
+    if (der != nullptr) der->encola_preorden(R);
+}
+
+template<class T>
+class ArbolBinario {
+private:
+    NodoArbol<T> *raiz;
+public:
+    ArbolBinario();
+
+    ~ArbolBinario();
+
+    void put(T dato);
+
+    void remove(T dato);
+
+    void inorder();
+
+    bool esVacio();
+
+    void encola_preorden(Cola<T> &);
 };
 
+template<class T>
+ArbolBinario<T>::ArbolBinario() {
+    raiz = nullptr;
+}
 
-#endif //MAILMANAGER_ARBOL_H
+template<class T>
+ArbolBinario<T>::~ArbolBinario() {
+
+}
+
+template<class T>
+void ArbolBinario<T>::put(T dato) {
+    if (raiz == nullptr)
+        raiz = new NodoArbol<T>(dato);
+    else
+        raiz->put(dato);
+}
+
+template<class T>
+void ArbolBinario<T>::remove(T dato) {
+    NodoArbol<T> *aux;
+    if (raiz == nullptr)
+        throw 6;
+    aux = raiz;
+    raiz = raiz->remover(dato);
+    if (raiz != aux)        //si se quiere eliminar la raiz no hay padre para borrar el aux
+        delete aux;
+}
+
+template<class T>
+void ArbolBinario<T>::inorder() {
+    if (raiz != nullptr)
+        raiz->inorder();
+}
+
+template<class T>
+bool ArbolBinario<T>::esVacio() {
+    return raiz == nullptr;
+}
+
+template<class T>
+void ArbolBinario<T>::encola_preorden(Cola<T> &R) {
+    if (raiz != nullptr)
+        raiz->encola_preorden(R);
+}
+
+#endif //MAILMANAGER_ARBOLBINARIO_H
