@@ -22,7 +22,9 @@ public:
 
     NodoArbolConLista<T, K> *remover(T d);
 
-    void inorder(Cola<T> &); //ver tipo de retorno
+    void inorder(Cola<K> &); //ver tipo de retorno
+
+    Lista<K> &getLista(T);
 };
 
 template<class T, class K>
@@ -40,7 +42,8 @@ T NodoArbolConLista<T, K>::getDato() {
 
 template<class T, class K, class K>
 void NodoArbolConLista<T, K>::put(T d, Nodo<K> *ptr) {
-    if (d == dato) {
+    if (d == dato && listaPtr.getDato(0) != ptr) {
+//        if (listaPtr.getDato(0) != ptr)
         this->listaPtr.insertarPrimero(ptr);
     } else {
         if (d < dato) {
@@ -84,12 +87,23 @@ NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::remover(T d) {
 }
 
 template<class T, class K>
-void NodoArbolConLista<T, K>::inorder(Cola<T> &R) {
+void NodoArbolConLista<T, K>::inorder(Cola<K> &R) {
     if (izq != nullptr)izq->inorder(R);
     for (unsigned int i = 0; !this->listaPtr.esVacia(); ++i)
         R.encolar(listaPtr.getDato(i));
     if (der != nullptr)der->inorder(R);
-};
+}
+
+template<class T, class K>
+Lista<K> &NodoArbolConLista<T, K>::getLista(T d) {
+    if (this->dato == d)
+        return this->listaPtr;      //capaz que haiga que copiarlos
+    if (this->izq != nullptr)
+        return izq->getLista(d);
+    if (this->der != nullptr)
+        return der->getLista(d);
+    throw -1;
+}
 
 
 template<class T, class K>
@@ -105,9 +119,11 @@ public:
 
     void remove(T);
 
-    void inorder(Cola<T> &);
+    void inorder(Cola<K> &);
 
     bool esVacio();
+
+    Lista<K> &getLista(T);
 };
 
 template<class T, class K>
@@ -140,7 +156,7 @@ void ArbolBinarioConLista<T, K>::remove(T dato) {
 }
 
 template<class T, class K>
-void ArbolBinarioConLista<T, K>::inorder(Cola<T> &R) {
+void ArbolBinarioConLista<T, K>::inorder(Cola<K> &R) {
     if (raiz != nullptr)
         raiz->inorder(R);
 }
@@ -150,5 +166,10 @@ bool ArbolBinarioConLista<T, K>::esVacio() {
     return raiz == nullptr;
 }
 
+template<class T, class K>
+Lista<K> &ArbolBinarioConLista<T, K>::getLista(T d) {
+    if (raiz != nullptr)
+        return raiz->getLista(d);
+}
 
 #endif //MAILMANAGER_ARBOL_H

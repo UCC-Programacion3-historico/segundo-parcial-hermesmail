@@ -1,18 +1,6 @@
-* La fecha debe ser string u otra cosa
-
-* Usamos hash o arbol para metodo fechas. Son muchos o pocos mails a manejar
-
-* Puede haber dos emails exactamente igualess?
-
-* email.date si o si tiene que ser string?
-
 * el id viene con el mail o el manager lo tiene que asignar
 
-* pa quel to?
-
-* Los vectores deben ser de punteros o de mails?
-
-
+*como es el manejo de clase Vector para insertar al primcipio? y al ultimo?
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,3 +8,33 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 - Sacar nodos de palabras/fechas/remitentes al eliminar algun email
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%CODIGO%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%AUXILIAR%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+//    string tmp = m.subject + ' ' + m.content;
+//    ArbolBinario<string> auxPalabras;                   // para evitar que cuando dentro de un mismo mail
+//    for (int i = 0; tmp[i] != nullptr; ++i) {
+//        string palabra = nullptr;
+//        while (tmp[i] != ' ') {
+//            //may min puntos etc.
+//            palabra += tmp[i];
+//            i++;
+//        }
+//        if (palabra != nullptr) {
+//            try {
+//                auxPalabras.put(palabra);
+//            } catch (int e) {
+//
+//            }
+//        }
+//    }
+//    Cola<string> colaPalabras;
+//    auxPalabras.encola_preorden(colaPalabras);
+//    while (!colaPalabras.esVacia())
+//        arbol_Diccionario.put(colaPalabras.desencolar(), lista_Emails.getInicio());

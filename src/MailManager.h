@@ -35,8 +35,8 @@ private:
     //Arbol binario que almacena ordenando los remitentes alfabeticamente
     ArbolBinarioConLista<string, email> arbol_Diccionario;
     //Arbol binario que almacena las palabras de los emails alfabeticamente
-
-    /*Aca iria el hash/arbol de fechas*/
+    ArbolBinarioConLista<string, email> arbol_Fecha;
+    //Arbol binario que almacena las fechas de los emails cronologicamente
 
 public:
     MailManager();

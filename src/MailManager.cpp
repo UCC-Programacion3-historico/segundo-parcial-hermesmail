@@ -15,26 +15,20 @@ MailManager::MailManager() {
  */
 void MailManager::addMail(email m) {
     lista_Emails.insertarPrimero(m);
-    arbol_Remitentes.put(m.from, lista_Emails.getInicio());
+    Nodo<email> *tmpInicio = lista_Emails.getInicio();      //para evitar llamadas a metodos
+    arbol_Remitentes.put(m.from, tmpInicio);
+    arbol_Fecha.put(m.date, tmpInicio);
 
     string tmp = m.subject + ' ' + m.content;
-    ArbolBinario<string> lasPalabras;
-    for (int i = 0; tmp[i] != nullptr; ++i) {
+    for (int i = 0; i < tmp[i] != nullptr; ++i) {
         string palabra = nullptr;
         while (tmp[i] != ' ') {
             //may min puntos etc.
             palabra += tmp[i];
             i++;
         }
-        if (palabra != nullptr)
-            lasPalabras.put(palabra);
+        arbol_Diccionario.put(palabra, tmpInicio);
     }
-    Cola<string> colaPalabras;
-    lasPalabras.encola_preorden(colaPalabras);
-    while (!colaPalabras.esVacia())
-        arbol_Diccionario.put(colaPalabras.desencolar(), lista_Emails.getInicio());
-
-    //FALTA VER SI HASH O ARBOL PARA LAS FECHAS
 }
 
 
@@ -53,7 +47,13 @@ void MailManager::deleteMail(unsigned long id) {
  */
 vector<email> MailManager::getSortedByDate() {
     vector<email> ret;
+    Cola<email> tmp;
+    arbol_Fecha.inorder(tmp);
+    while (!tmp.esVacia())
+        ret.push_back(tmp.desencolar());
+    //ret.insert()
     return ret;
+    ///REVISAR
 }
 
 
@@ -65,8 +65,7 @@ vector<email> MailManager::getSortedByDate() {
  * @return lista de mails ordenados
  */
 vector<email> MailManager::getSortedByDate(string desde, string hasta) {
-    vector<email> ret;
-    return ret;
+
 }
 
 
@@ -92,6 +91,11 @@ vector<email> MailManager::getSortedByFrom() {
  */
 vector<email> MailManager::getByFrom(string from) {
     vector<email> ret;
+    Nodo<email> *R = arbol_Remitentes.getLista(from).getInicio();           //que devuelva solo el puntero a nodo
+    while (R != nullptr) {
+        ret.push_back(R->getDato());
+        R = R->getNext();
+    }
     return ret;
 }
 
