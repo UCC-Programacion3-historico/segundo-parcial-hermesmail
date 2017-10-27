@@ -6,110 +6,12 @@
 #define MAILMANAGER_ARBOL_H
 
 #include "Cola.h"
-
-template<class T, class K>
-class NodoArbolConLista {
-private:
-    NodoArbolConLista<T, K> *izq, *der;
-    T dato;
-    Lista<K *> listaPtr;
-public:
-    NodoArbolConLista(T, Nodo<K> *);
-
-    T getDato();
-
-    void put(T, Nodo<K> *);
-
-    NodoArbolConLista<T, K> *remover(T d);
-
-    void inorder(Cola<K> &); //ver tipo de retorno
-
-    Lista<K> &getLista(T);
-};
-
-template<class T, class K>
-NodoArbolConLista<T, K>::NodoArbolConLista(T dato, Nodo<K> *ptr) {
-    this->dato = dato;
-    this->listaPtr.insertarPrimero(ptr);
-    izq = nullptr;
-    der = nullptr;
-}
-
-template<class T, class K>
-T NodoArbolConLista<T, K>::getDato() {
-    return dato;
-}
-
-template<class T, class K, class K>
-void NodoArbolConLista<T, K>::put(T d, Nodo<K> *ptr) {
-    if (d == dato && listaPtr.getDato(0) != ptr) {
-//        if (listaPtr.getDato(0) != ptr)
-        this->listaPtr.insertarPrimero(ptr);
-    } else {
-        if (d < dato) {
-            if (izq == nullptr) {
-                izq = new NodoArbolConLista<T, K>(d, ptr);
-            } else {
-                izq->put(d, ptr);
-            }
-        } else {
-            if (der == nullptr) {
-                der = new NodoArbolConLista<T, K>(d, ptr);
-            } else {
-                der->put(d, ptr);
-            }
-        }
-    }
-}
-
-template<class T, class K>
-NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::remover(T d) {
-    NodoArbolConLista<T, K> *aux;
-    if (d == dato) {
-        if (der != nullptr) {
-            der->put(izq, nullptr);                     // ATENCION OJO AL PIOJO
-            return der;
-        }
-        return izq;
-    }
-    if (d < dato) {
-        if (izq == nullptr)throw 1;
-        aux = izq;
-        izq = izq->remover(d);
-        if (izq != aux)delete aux;
-    } else {
-        if (der == nullptr)throw 1;
-        aux = der;
-        der = der->remover(d);
-        if (der != aux)delete aux;
-    }
-    return this;
-}
-
-template<class T, class K>
-void NodoArbolConLista<T, K>::inorder(Cola<K> &R) {
-    if (izq != nullptr)izq->inorder(R);
-    for (unsigned int i = 0; !this->listaPtr.esVacia(); ++i)
-        R.encolar(listaPtr.getDato(i));
-    if (der != nullptr)der->inorder(R);
-}
-
-template<class T, class K>
-Lista<K> &NodoArbolConLista<T, K>::getLista(T d) {
-    if (this->dato == d)
-        return this->listaPtr;      //capaz que haiga que copiarlos
-    if (this->izq != nullptr)
-        return izq->getLista(d);
-    if (this->der != nullptr)
-        return der->getLista(d);
-    throw -1;
-}
-
+#include "NodoArbolConLista.h"
 
 template<class T, class K>
 class ArbolBinarioConLista {
 private:
-    NodoArbolConLista<T, class K> *raiz;
+    NodoArbolConLista<T, K> *raiz;
 public:
     ArbolBinarioConLista();
 
@@ -121,9 +23,11 @@ public:
 
     void inorder(Cola<K> &);
 
+    void inorderRango(Cola<K> &, string, string);
+
     bool esVacio();
 
-    Lista<K> &getLista(T);
+    Lista<Nodo<K> *> &getLista(T);
 };
 
 template<class T, class K>
@@ -162,12 +66,18 @@ void ArbolBinarioConLista<T, K>::inorder(Cola<K> &R) {
 }
 
 template<class T, class K>
+void ArbolBinarioConLista<T, K>::inorderRango(Cola<K> &R,string desde,string hasta) {
+    if (raiz != nullptr)
+        raiz->inorderRango(R,desde,hasta);
+}
+
+template<class T, class K>
 bool ArbolBinarioConLista<T, K>::esVacio() {
     return raiz == nullptr;
 }
 
 template<class T, class K>
-Lista<K> &ArbolBinarioConLista<T, K>::getLista(T d) {
+Lista<Nodo<K> *> &ArbolBinarioConLista<T, K>::getLista(T d) {
     if (raiz != nullptr)
         return raiz->getLista(d);
 }

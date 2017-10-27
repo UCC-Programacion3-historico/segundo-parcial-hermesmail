@@ -5,27 +5,7 @@
 #ifndef MAILMANAGER_COLA_H
 #define MAILMANAGER_COLA_H
 
-template<class T>
-class Nodo {
-private:
-    T dato;
-    Nodo *next;
-public:
-    Nodo() { next = nullptr; }
-
-    Nodo(T d, Nodo *n) {
-        dato = d;
-        next = n;
-    }
-
-    void setDato(T d) { dato = d; }
-
-    void setNext(Nodo *n) { next = n; }
-
-    T getDato() { return dato; }
-
-    Nodo *getNext() { return next; }
-};
+#include "Nodo.h"
 
 template<class T>
 class Cola {
@@ -61,7 +41,7 @@ Cola<T>::~Cola() {
 
 template<class T>
 void Cola<T>::encolar(T dato) {
-    Nodo<T> *aux = new Nodo<T>(dato);
+    Nodo<T> *aux = new Nodo<T>(dato, nullptr);
 
     if (fondo == nullptr && frente == nullptr) {
         frente = fondo = aux;

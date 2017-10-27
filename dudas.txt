@@ -17,6 +17,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+
+ if (izq != nullptr)
+        izq->inorder(R);
+    if (this->getDato() >= desde && this->getDato() <= hasta) {
+        Nodo<Nodo<K> *> *aux = this->listaPtr.getInicio();
+        while (aux != nullptr) {
+            R.encolar(aux->getDato());
+            aux = aux->getNext();
+        }
+    }
+    if (der != nullptr)
+        der->inorder(R);
+
+
+
 //    string tmp = m.subject + ' ' + m.content;
 //    ArbolBinario<string> auxPalabras;                   // para evitar que cuando dentro de un mismo mail
 //    for (int i = 0; tmp[i] != nullptr; ++i) {

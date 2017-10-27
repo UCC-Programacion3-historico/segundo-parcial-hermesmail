@@ -1,5 +1,4 @@
 #include "MailManager.h"
-#include "Estructuras_Datos/ArbolBinario.h"
 
 /**
  * Constructor
@@ -20,7 +19,7 @@ void MailManager::addMail(email m) {
     arbol_Fecha.put(m.date, tmpInicio);
 
     string tmp = m.subject + ' ' + m.content;
-    for (int i = 0; i < tmp[i] != nullptr; ++i) {
+    for (int i = 0; tmp[i] != '\0'; ++i) {
         string palabra = nullptr;
         while (tmp[i] != ' ') {
             //may min puntos etc.
@@ -65,7 +64,13 @@ vector<email> MailManager::getSortedByDate() {
  * @return lista de mails ordenados
  */
 vector<email> MailManager::getSortedByDate(string desde, string hasta) {
-
+    vector<email> ret;
+    Cola<email> tmp;
+    arbol_Fecha.inorderRango(tmp,desde,hasta);
+    while (!tmp.esVacia())
+        ret.push_back(tmp.desencolar());
+    //ret.insert()
+    return ret;
 }
 
 
@@ -80,7 +85,6 @@ vector<email> MailManager::getSortedByFrom() {
     while (!tmp.esVacia())
         ret.push_back(tmp.desencolar());
     return ret;
-    ///REVISAR
 }
 
 
@@ -91,7 +95,7 @@ vector<email> MailManager::getSortedByFrom() {
  */
 vector<email> MailManager::getByFrom(string from) {
     vector<email> ret;
-    Nodo<email> *R = arbol_Remitentes.getLista(from).getInicio();           //que devuelva solo el puntero a nodo
+    Nodo<email> *R = arbol_Remitentes.getLista(from).getInicio()->getDato();      //que devuelva solo el puntero a nodo
     while (R != nullptr) {
         ret.push_back(R->getDato());
         R = R->getNext();
@@ -108,5 +112,10 @@ vector<email> MailManager::getByFrom(string from) {
  */
 vector<email> MailManager::getByQuery(string query) {
     vector<email> ret;
+    Nodo<email> *R = arbol_Diccionario.getLista(query).getInicio()->getDato();
+    while (R != nullptr) {
+        ret.push_back(R->getDato());
+        R = R->getNext();
+    }
     return ret;
 }

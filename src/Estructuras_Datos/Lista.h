@@ -5,27 +5,7 @@
 #ifndef MAILMANAGER_LISTA_H
 #define MAILMANAGER_LISTA_H
 
-template<class T>
-class Nodo {
-private:
-    T dato;
-    Nodo *next;
-public:
-    Nodo() { next = nullptr; }
-
-    Nodo(T d, Nodo *n) {
-        dato = d;
-        next = n;
-    }
-
-    void setDato(T d) { dato = d; }
-
-    void setNext(Nodo *n) { next = n; }
-
-    T getDato() { return dato; }
-
-    Nodo *getNext() { return next; }
-};
+#include "Nodo.h"
 
 template<class T>
 class Lista {
@@ -42,13 +22,14 @@ public:
 
     Nodo<T> *getInicio() const;
 
-    void insertarPrimero(T dato);
+    void insertarPrimero(T);
     //Es mas eficiente insertar al principio que al final
 
     void remover(/*vaya uno a saber*/);
 
     T getDato(unsigned int);
 };
+
 
 template<class T>
 Lista<T>::Lista() {
@@ -93,6 +74,21 @@ template<class T>
 void Lista<T>::insertarPrimero(T dato) {
     Nodo<T> *nn = new Nodo<T>(dato, inicio);
     inicio = nn;
+}
+
+template<class T>
+T Lista<T>::getDato(unsigned int n) {
+    int i = 0;
+    Nodo<T> *aux = inicio;
+    while (i < n && aux != nullptr) {
+        aux = aux->getNext();
+        i++;
+    }
+
+    if (aux == nullptr)
+        throw 1;
+
+    return aux->getDato();
 }
 
 
