@@ -19,7 +19,7 @@ public:
 
     void put(T, Nodo<K> *);
 
-    void remove(T);
+    void remove(T, Nodo<K> *);
 
     void inorder(Cola<K> &);
 
@@ -50,11 +50,11 @@ void ArbolBinarioConLista<T, K>::put(T dato, Nodo<K> *ptr) {
 }
 
 template<class T, class K>
-void ArbolBinarioConLista<T, K>::remove(T dato) {
+void ArbolBinarioConLista<T, K>::remove(T dato, Nodo<K> *ptr) {//ptr apunta al nodo con el mail en la lista principal
     NodoArbolConLista<T, K> *aux;
     if (raiz == nullptr)throw 1;
     aux = raiz;
-    raiz = raiz->remover(dato);
+    raiz = raiz->remover(dato, ptr);
     if (raiz != aux)
         delete aux;
 }
@@ -66,9 +66,9 @@ void ArbolBinarioConLista<T, K>::inorder(Cola<K> &R) {
 }
 
 template<class T, class K>
-void ArbolBinarioConLista<T, K>::inorderRango(Cola<K> &R,string desde,string hasta) {
+void ArbolBinarioConLista<T, K>::inorderRango(Cola<K> &R, string desde, string hasta) {
     if (raiz != nullptr)
-        raiz->inorderRango(R,desde,hasta);
+        raiz->inorderRango(R, desde, hasta);
 }
 
 template<class T, class K>

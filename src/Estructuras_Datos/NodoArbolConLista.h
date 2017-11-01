@@ -18,7 +18,7 @@ public:
 
     void put(T, Nodo<K> *);
 
-    NodoArbolConLista<T, K> *remover(T d);
+    NodoArbolConLista<T, K> *remover(T, Nodo<K> *);
 
     void inorder(Cola<K> &); //ver tipo de retorno
 
@@ -43,7 +43,7 @@ T NodoArbolConLista<T, K>::getDato() {
 template<class T, class K>
 void NodoArbolConLista<T, K>::put(T d, Nodo<K> *ptr) {
     if (d == dato) {
-        if (listaPtr.getDato(0) != ptr)
+        if (listaPtr.getInicio()->getDato() != ptr)
             this->listaPtr.insertarPrimero(ptr);
     } else {
         if (d < dato) {
@@ -63,25 +63,34 @@ void NodoArbolConLista<T, K>::put(T d, Nodo<K> *ptr) {
 }
 
 template<class T, class K>
-NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::remover(T d) {
+NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::remover(T d, Nodo<K> *ptr) {
     NodoArbolConLista<T, K> *aux;
     if (d == dato) {
-        if (der != nullptr) {
-            der->put(izq, nullptr);                     // ATENCION OJO AL PIOJO
-            return der;
+        this->listaPtr.remover(ptr);   //T de esta lista Nodo<K> *
+        if (listaPtr.esVacia()) {
+            if (der != nullptr) {
+                der->put(izq, nullptr);                     // ATENCION OJO AL PIOJO
+                return der;
+            }
+            return izq;
         }
-        return izq;
+        return this;
     }
     if (d < dato) {
-        if (izq == nullptr)throw 1;
+        if (izq == nullptr)
+            throw 1;
         aux = izq;
-        izq = izq->remover(d);
-        if (izq != aux)delete aux;
+        izq = izq->remover(d, ptr);
+        if (izq != aux)
+            delete aux;
+
     } else {
-        if (der == nullptr)throw 1;
+        if (der == nullptr)
+            throw 1;
         aux = der;
-        der = der->remover(d);
-        if (der != aux)delete aux;
+        der = der->remover(d, ptr);
+        if (der != aux)
+            delete aux;
     }
     return this;
 }

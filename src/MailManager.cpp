@@ -15,13 +15,14 @@ MailManager::MailManager() {
 void MailManager::addMail(email m) {
     lista_Emails.insertarPrimero(m);
     Nodo<email> *tmpInicio = lista_Emails.getInicio();      //para evitar llamadas a metodos
+    arbol_ID.put(m.id, tmpInicio);
     arbol_Remitentes.put(m.from, tmpInicio);
     arbol_Fecha.put(m.date, tmpInicio);
 
     string tmp = m.subject + ' ' + m.content;
     for (int i = 0; tmp[i] != '\0'; ++i) {
         string palabra = nullptr;
-        while (tmp[i] != ' ') {
+        while (tmp[i] != ' ' || tmp[i] != '\0') {
             //may min puntos etc.
             palabra += tmp[i];
             i++;
@@ -36,7 +37,26 @@ void MailManager::addMail(email m) {
  * @param id identificador del mail a borrar
  */
 void MailManager::deleteMail(unsigned long id) {
+    Nodo<email> *aEliminar = arbol_ID.getLista(id).getInicio()->getDato();    //apunta al eliminar de la lista principal
+    string tmpFecha = aEliminar->getDato().date;
+    string tmpRemitente = aEliminar->getDato().from;
+    string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content;
 
+    arbol_Fecha.remove(tmpFecha, aEliminar);
+    arbol_Remitentes.remove(tmpRemitente, aEliminar);
+
+
+    for (int i = 0; tmpTexto[i] != '\0'; ++i) {
+        string palabra = nullptr;
+        while (tmpTexto[i] != ' ' || tmpTexto[i] != '\0') {
+            //may min puntos etc.
+            palabra += tmpTexto[i];
+            i++;
+        }
+        arbol_Diccionario.remove(palabra,aEliminar);
+        }
+    arbol_ID.remove(id,aEliminar);
+    lista_Emails.remover(aEliminar->getDato());
 }
 
 
@@ -66,7 +86,7 @@ vector<email> MailManager::getSortedByDate() {
 vector<email> MailManager::getSortedByDate(string desde, string hasta) {
     vector<email> ret;
     Cola<email> tmp;
-    arbol_Fecha.inorderRango(tmp,desde,hasta);
+    arbol_Fecha.inorderRango(tmp, desde, hasta);
     while (!tmp.esVacia())
         ret.push_back(tmp.desencolar());
     //ret.insert()

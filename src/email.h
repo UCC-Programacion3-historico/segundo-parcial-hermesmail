@@ -16,6 +16,8 @@ public:
     string date;
     string subject;
     string content;
+
+    bool operator==(const email&);
 };
 
 

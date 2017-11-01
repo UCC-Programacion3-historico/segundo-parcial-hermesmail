@@ -4,6 +4,10 @@
 #include <fstream>
 #include "email.h"
 
+bool email::operator==(const email &E) {
+    return (this->id == E.id);
+}
+
 //Funcion que devuelve un objeto de tipo Email a partir del archivo txt donde se almacena
 email LeeEmail(string nombre_txt) {
     nombre_txt = "../Emails/" + nombre_txt + ".txt";

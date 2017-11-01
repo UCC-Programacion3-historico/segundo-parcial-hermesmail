@@ -9,34 +9,18 @@
 
 using namespace std;
 
-//typedef struct {
-//    string remitente;
-//    Lista<email *> listaEmails;
-//} DatoRemitente;
-//// dato del nodo del arbol para que guarde el remitente y una lista que tenga los punteros a los emails de dicho remitente
-//
-//typedef struct {
-//    string palabra;
-//    Lista<email *> listaEmails;
-//} DatoPalabra;
-//// dato del nodo del arbol para que guarde las palabras y una lista de los emails que contienen dicha palabra
-//
-//typedef struct {
-//    string fecha;
-//    Lista<email *> listaEmails;
-//} DatoFecha;
-//// dato del nodo del arbol/hash que guarda las fechas y una lista de los emails que contienen dicha fecha
-
 class MailManager {
 private:
     Lista<email> lista_Emails;
     //Lista enlazada que almacena un listado de los mails agregados
+    ArbolBinarioConLista<unsigned long, email> arbol_ID;
+    //Arbol binario que almacena los IDs de los emails ordenandos de menor a mayor
     ArbolBinarioConLista<string, email> arbol_Remitentes;
-    //Arbol binario que almacena ordenando los remitentes alfabeticamente
+    //Arbol binario que almacena los remitentes de los emails ordenandos alfabeticamente
     ArbolBinarioConLista<string, email> arbol_Diccionario;
-    //Arbol binario que almacena las palabras de los emails alfabeticamente
+    //Arbol binario que almacena las palabras de los emails ordenandos alfabeticamente
     ArbolBinarioConLista<string, email> arbol_Fecha;
-    //Arbol binario que almacena las fechas de los emails cronologicamente
+    //Arbol binario que almacena las fechas de los emails ordenandos cronologicamente
 
 public:
     MailManager();

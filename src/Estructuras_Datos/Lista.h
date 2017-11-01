@@ -25,9 +25,9 @@ public:
     void insertarPrimero(T);
     //Es mas eficiente insertar al principio que al final
 
-    void remover(/*vaya uno a saber*/);
+    void remover(T);
 
-    T getDato(unsigned int);
+    //T getDato(unsigned int);
 };
 
 
@@ -77,6 +77,31 @@ void Lista<T>::insertarPrimero(T dato) {
 }
 
 template<class T>
+void Lista<T>::remover(T dato) {
+    Nodo<T> *aux = inicio;
+    if (aux == nullptr)
+        throw -1;
+    if (dato == inicio->getDato()) {
+        inicio = inicio->getNext();
+        delete aux;
+        return;
+    }
+
+    while (aux->getNext()->getDato() != dato && aux->getNext() != nullptr) {
+        aux = aux->getNext();
+    }
+
+    Nodo<T> *tmp = aux->getNext();
+
+    if (tmp == nullptr) {
+        throw -1;
+    }
+
+    aux->setNext(tmp->getNext());
+    delete tmp;
+}
+
+/*template<class T>
 T Lista<T>::getDato(unsigned int n) {
     int i = 0;
     Nodo<T> *aux = inicio;
@@ -89,7 +114,8 @@ T Lista<T>::getDato(unsigned int n) {
         throw 1;
 
     return aux->getDato();
-}
+}*/
+
 
 
 #endif //MAILMANAGER_LISTA_H
