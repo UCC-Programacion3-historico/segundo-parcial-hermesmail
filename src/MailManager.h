@@ -22,6 +22,9 @@ private:
     ArbolBinarioConLista<string, email> arbol_Fecha;
     //Arbol binario que almacena las fechas de los emails ordenandos cronologicamente
 
+    string complemento(string);
+    //funcion que calcula el complemento a 9 de un numero
+
 public:
     MailManager();
 

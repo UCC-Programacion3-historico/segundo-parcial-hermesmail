@@ -17,7 +17,7 @@ void MailManager::addMail(email m) {
     Nodo<email> *tmpInicio = lista_Emails.getInicio();      //para evitar llamadas a metodos
     arbol_ID.put(m.id, tmpInicio);
     arbol_Remitentes.put(m.from, tmpInicio);
-    arbol_Fecha.put(m.date, tmpInicio);
+    arbol_Fecha.put(complemento(m.date), tmpInicio);
 
     string tmp = m.subject + ' ' + m.content;
     for (int i = 0; tmp[i] != '\0'; ++i) {
@@ -38,7 +38,7 @@ void MailManager::addMail(email m) {
  */
 void MailManager::deleteMail(unsigned long id) {
     Nodo<email> *aEliminar = arbol_ID.getLista(id).getInicio()->getDato();    //apunta al eliminar de la lista principal
-    string tmpFecha = aEliminar->getDato().date;
+    string tmpFecha = complemento(aEliminar->getDato().date);
     string tmpRemitente = aEliminar->getDato().from;
     string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content;
 
@@ -53,9 +53,9 @@ void MailManager::deleteMail(unsigned long id) {
             palabra += tmpTexto[i];
             i++;
         }
-        arbol_Diccionario.remove(palabra,aEliminar);
-        }
-    arbol_ID.remove(id,aEliminar);
+        arbol_Diccionario.remove(palabra, aEliminar);
+    }
+    arbol_ID.remove(id, aEliminar);
     lista_Emails.remover(aEliminar->getDato());
 }
 
@@ -66,11 +66,7 @@ void MailManager::deleteMail(unsigned long id) {
  */
 vector<email> MailManager::getSortedByDate() {
     vector<email> ret;
-    Cola<email> tmp;
-    arbol_Fecha.inorder(tmp);
-    while (!tmp.esVacia())
-        ret.push_back(tmp.desencolar());
-    //ret.insert()
+    arbol_Fecha.inorder(ret);
     return ret;
     ///REVISAR
 }
@@ -85,11 +81,7 @@ vector<email> MailManager::getSortedByDate() {
  */
 vector<email> MailManager::getSortedByDate(string desde, string hasta) {
     vector<email> ret;
-    Cola<email> tmp;
-    arbol_Fecha.inorderRango(tmp, desde, hasta);
-    while (!tmp.esVacia())
-        ret.push_back(tmp.desencolar());
-    //ret.insert()
+    arbol_Fecha.inorderRango(ret, complemento(desde), complemento(hasta));
     return ret;
 }
 
@@ -100,10 +92,7 @@ vector<email> MailManager::getSortedByDate(string desde, string hasta) {
  */
 vector<email> MailManager::getSortedByFrom() {
     vector<email> ret;
-    Cola<email> tmp;
-    arbol_Remitentes.inorder(tmp);
-    while (!tmp.esVacia())
-        ret.push_back(tmp.desencolar());
+    arbol_Remitentes.inorder(ret);
     return ret;
 }
 
@@ -138,4 +127,12 @@ vector<email> MailManager::getByQuery(string query) {
         R = R->getNext();
     }
     return ret;
+}
+
+
+string MailManager::complemento(string c) {
+    char num[] = {'9', '8', '7', '6', '5', '4', '3', '2', '1', '0'};
+    for (int i = 0; c[i] != '\0'; ++i)
+        c[i] = num[int(c[(i)])];
+    return c;
 }

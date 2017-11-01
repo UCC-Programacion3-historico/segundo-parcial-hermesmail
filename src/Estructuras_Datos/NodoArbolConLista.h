@@ -18,11 +18,13 @@ public:
 
     void put(T, Nodo<K> *);
 
+    void put(NodoArbolConLista<T, K> *);
+
     NodoArbolConLista<T, K> *remover(T, Nodo<K> *);
 
-    void inorder(Cola<K> &); //ver tipo de retorno
+    void inorder(vector<K> &); //ver tipo de retorno
 
-    void inorderRango(Cola<K> &, string, string);
+    void inorderRango(vector<K> &, string, string);
 
     Lista<Nodo<K> *> &getLista(T);
 };
@@ -63,13 +65,29 @@ void NodoArbolConLista<T, K>::put(T d, Nodo<K> *ptr) {
 }
 
 template<class T, class K>
+void NodoArbolConLista<T, K>::put(NodoArbolConLista<T, K> *ptr) {
+    //hay forma de que sean iguales??
+    if (ptr->getDato() < this->dato) {
+        if (izq == nullptr)
+            izq = ptr;
+        else
+            izq->put(ptr);
+    } else {
+        if (der == nullptr)
+            der = ptr;
+        else
+            der->put(ptr);
+    }
+}
+
+template<class T, class K>
 NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::remover(T d, Nodo<K> *ptr) {
     NodoArbolConLista<T, K> *aux;
     if (d == dato) {
         this->listaPtr.remover(ptr);   //T de esta lista Nodo<K> *
         if (listaPtr.esVacia()) {
             if (der != nullptr) {
-                der->put(izq, nullptr);                     // ATENCION OJO AL PIOJO
+                der->put(izq);                     // ATENCION OJO AL PIOJO
                 return der;
             }
             return izq;
@@ -96,25 +114,35 @@ NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::remover(T d, Nodo<K> *ptr) {
 }
 
 template<class T, class K>
-void NodoArbolConLista<T, K>::inorder(Cola<K> &R) {
+void NodoArbolConLista<T, K>::inorder(vector<K> &R) {
     if (izq != nullptr)izq->inorder(R);
-    for (unsigned int i = 0; !this->listaPtr.esVacia(); ++i)
-        R.encolar(listaPtr.getDato(i)->getDato());          // muy fiero el getdato(i)  recorre muchas veces la lista
+    Nodo<Nodo<email> *> *aux = listaPtr.getInicio();
+
+    while (aux != nullptr) {
+        R.push_back(aux->getDato()->getDato());
+        aux = aux->getNext();
+    }
+//    while (aux != nullptr) {
+//        R.encolar(aux->getDato()->getDato());
+//        aux = aux->getNext();
+//    }
+
     if (der != nullptr)der->inorder(R);
 }
 
 template<class T, class K>
-void NodoArbolConLista<T, K>::inorderRango(Cola<K> &R, string desde, string hasta) {
+void NodoArbolConLista<T, K>::inorderRango(vector<K> &R, string desde, string hasta) {
     if (izq != nullptr && this->getDato() >= desde)
         izq->inorder(R);
 
     if (this->getDato() >= desde && this->getDato() <= hasta) {
         Nodo<Nodo<K> *> *aux = this->listaPtr.getInicio();
         while (aux != nullptr) {
-            R.encolar(aux->getDato()->getDato());
+            R.push_back(aux->getDato()->getDato());
             aux = aux->getNext();
         }
     }
+
 
     if (der != nullptr && this->getDato() <= hasta)
         der->inorder(R);

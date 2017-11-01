@@ -5,7 +5,6 @@
 #ifndef MAILMANAGER_ARBOL_H
 #define MAILMANAGER_ARBOL_H
 
-#include "Cola.h"
 #include "NodoArbolConLista.h"
 
 template<class T, class K>
@@ -21,9 +20,9 @@ public:
 
     void remove(T, Nodo<K> *);
 
-    void inorder(Cola<K> &);
+    void inorder(vector<K> &);
 
-    void inorderRango(Cola<K> &, string, string);
+    void inorderRango(vector<K> &, string, string);
 
     bool esVacio();
 
@@ -60,13 +59,13 @@ void ArbolBinarioConLista<T, K>::remove(T dato, Nodo<K> *ptr) {//ptr apunta al n
 }
 
 template<class T, class K>
-void ArbolBinarioConLista<T, K>::inorder(Cola<K> &R) {
+void ArbolBinarioConLista<T, K>::inorder(vector<K> &R) {
     if (raiz != nullptr)
         raiz->inorder(R);
 }
 
 template<class T, class K>
-void ArbolBinarioConLista<T, K>::inorderRango(Cola<K> &R, string desde, string hasta) {
+void ArbolBinarioConLista<T, K>::inorderRango(vector<K> &R, string desde, string hasta) {
     if (raiz != nullptr)
         raiz->inorderRango(R, desde, hasta);
 }

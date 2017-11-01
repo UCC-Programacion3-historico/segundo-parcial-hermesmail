@@ -17,7 +17,9 @@ public:
     string subject;
     string content;
 
-    bool operator==(const email&);
+    bool operator==(const email &);
+
+    bool operator!=(const email &);
 };
 
 
