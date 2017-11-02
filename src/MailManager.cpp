@@ -17,7 +17,7 @@ void MailManager::addMail(email m) {
     Nodo<email> *tmpInicio = lista_Emails.getInicio();      //para evitar llamadas a metodos
     arbol_ID.put(m.id, tmpInicio);
     arbol_Remitentes.put(m.from, tmpInicio);
-    arbol_Fecha.put(complemento(m.date), tmpInicio);
+    arbol_Fecha.put(bobfara(m.date), tmpInicio);
 
     string tmp = m.subject + ' ' + m.content;
     for (int i = 0; tmp[i] != '\0'; ++i) {
@@ -38,7 +38,7 @@ void MailManager::addMail(email m) {
  */
 void MailManager::deleteMail(unsigned long id) {
     Nodo<email> *aEliminar = arbol_ID.getLista(id).getInicio()->getDato();    //apunta al eliminar de la lista principal
-    string tmpFecha = complemento(aEliminar->getDato().date);
+    string tmpFecha = bobfara(aEliminar->getDato().date);
     string tmpRemitente = aEliminar->getDato().from;
     string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content;
 
@@ -81,7 +81,7 @@ vector<email> MailManager::getSortedByDate() {
  */
 vector<email> MailManager::getSortedByDate(string desde, string hasta) {
     vector<email> ret;
-    arbol_Fecha.inorderRango(ret, complemento(desde), complemento(hasta));
+    arbol_Fecha.inorderRango(ret, bobfara(desde), bobfara(hasta));
     return ret;
 }
 
@@ -130,9 +130,10 @@ vector<email> MailManager::getByQuery(string query) {
 }
 
 
-string MailManager::complemento(string c) {
+string MailManager::bobfara(string c) {
     char num[] = {'9', '8', '7', '6', '5', '4', '3', '2', '1', '0'};
-    for (int i = 0; c[i] != '\0'; ++i)
+    for (int i = 0; i < 8; ++i)
         c[i] = num[int(c[(i)])];
+    c[9] = '\0';
     return c;
 }
