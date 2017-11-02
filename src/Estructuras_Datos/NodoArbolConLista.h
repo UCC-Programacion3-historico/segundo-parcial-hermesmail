@@ -67,6 +67,7 @@ void NodoArbolConLista<T, K>::put(T d, Nodo<K> *ptr) {
 template<class T, class K>
 void NodoArbolConLista<T, K>::put(NodoArbolConLista<T, K> *ptr) {
     //hay forma de que sean iguales??
+    if (ptr == nullptr) return;// ojo con esto
     if (ptr->getDato() < this->dato) {
         if (izq == nullptr)
             izq = ptr;
@@ -122,11 +123,6 @@ void NodoArbolConLista<T, K>::inorder(vector<K> &R) {
         R.push_back(aux->getDato()->getDato());
         aux = aux->getNext();
     }
-//    while (aux != nullptr) {
-//        R.encolar(aux->getDato()->getDato());
-//        aux = aux->getNext();
-//    }
-
     if (der != nullptr)der->inorder(R);
 }
 
@@ -135,13 +131,14 @@ void NodoArbolConLista<T, K>::inorderRango(vector<K> &R, string desde, string ha
     if (izq != nullptr && this->getDato() >= desde)
         izq->inorder(R);
 
-    if (this->getDato() >= desde && this->getDato() <= hasta) {
-        Nodo<Nodo<K> *> *aux = this->listaPtr.getInicio();
-        while (aux != nullptr) {
-            R.push_back(aux->getDato()->getDato());
-            aux = aux->getNext();
+    if (this->getDato() >= desde)
+        if (this->getDato() <= hasta) {
+            Nodo<Nodo<K> *> *aux = this->listaPtr.getInicio();
+            while (aux != nullptr) {
+                R.push_back(aux->getDato()->getDato());
+                aux = aux->getNext();
+            }
         }
-    }
 
 
     if (der != nullptr && this->getDato() <= hasta)
@@ -152,9 +149,9 @@ template<class T, class K>
 Lista<Nodo<K> *> &NodoArbolConLista<T, K>::getLista(T d) {
     if (this->dato == d)
         return this->listaPtr;      //capaz que haiga que copiarlos
-    if (this->izq != nullptr)
+    if (this->dato > d && this->izq != nullptr)
         return izq->getLista(d);
-    if (this->der != nullptr)
+    if (this->dato < d && this->der != nullptr)
         return der->getLista(d);
     throw -1;
 }

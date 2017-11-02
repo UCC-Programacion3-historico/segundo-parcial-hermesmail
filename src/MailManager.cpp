@@ -21,8 +21,8 @@ void MailManager::addMail(email m) {
 
     string tmp = m.subject + ' ' + m.content;
     for (int i = 0; tmp[i] != '\0'; ++i) {
-        string palabra = nullptr;
-        while (tmp[i] != ' ' || tmp[i] != '\0') {
+        string palabra = "";
+        while (tmp[i] != ' ' && tmp[i] != '\0' && tmp[i] != '\r') {
             //may min puntos etc.
             palabra += tmp[i];
             i++;
@@ -37,7 +37,8 @@ void MailManager::addMail(email m) {
  * @param id identificador del mail a borrar
  */
 void MailManager::deleteMail(unsigned long id) {
-    Nodo<email> *aEliminar = arbol_ID.getLista(id).getInicio()->getDato();    //apunta al eliminar de la lista principal
+    Nodo<email> *aEliminar = arbol_ID.getLista(
+            id).getInicio()->getDato();    //apunta al que queremos eliminar de la lista principal
     string tmpFecha = bobfara(aEliminar->getDato().date);
     string tmpRemitente = aEliminar->getDato().from;
     string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content;
@@ -47,8 +48,8 @@ void MailManager::deleteMail(unsigned long id) {
 
 
     for (int i = 0; tmpTexto[i] != '\0'; ++i) {
-        string palabra = nullptr;
-        while (tmpTexto[i] != ' ' || tmpTexto[i] != '\0') {
+        string palabra = "";
+        while (tmpTexto[i] != ' ' && tmpTexto[i] != '\0') {
             //may min puntos etc.
             palabra += tmpTexto[i];
             i++;
@@ -131,9 +132,10 @@ vector<email> MailManager::getByQuery(string query) {
 
 
 string MailManager::bobfara(string c) {
-    char num[] = {'9', '8', '7', '6', '5', '4', '3', '2', '1', '0'};
-    for (int i = 0; i < 8; ++i)
-        c[i] = num[int(c[(i)])];
-    c[9] = '\0';
+//    char num[] = {'9', '8', '7', '6', '5', '4', '3', '2', '1', '0'};
+//    string R = "";
+//    for (int i = 0; i < 8; ++i)
+//        R[i] = num[int(c[i])];      // ojo qué devuelve int ()
+//    return R;
     return c;
 }

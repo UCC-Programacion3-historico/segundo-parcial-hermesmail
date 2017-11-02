@@ -79,6 +79,7 @@ template<class T, class K>
 Lista<Nodo<K> *> &ArbolBinarioConLista<T, K>::getLista(T d) {
     if (raiz != nullptr)
         return raiz->getLista(d);
+    throw -5;
 }
 
 #endif //MAILMANAGER_ARBOL_H
