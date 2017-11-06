@@ -155,12 +155,10 @@ string MailManager::bobfara(string c) {
 }
 
 string MailManager::corrige(string s) {
-    char *c = &s[0];
+    string R = "";
     for (int i = 0; i < s.length(); ++i) {
-        if (*c == '.') {
-            c[i] = c[i + 1];
-        } else
-            c[i] = tolower(c[i]);
+        if(s[i] != '.')
+            R += tolower(s[i]);
     }
-    return c;
+    return R;
 }

@@ -38,8 +38,8 @@ int main() {
     std::cout << "Super gestor de mails" << std::endl;
     MailManager MM;
 
-    /*MM.addMail(LeeEmail("email000"));
-    MM.addMail(LeeEmail("email001"));
+    //MM.addMail(LeeEmail("email000"));
+    /*MM.addMail(LeeEmail("email001"));
     MM.addMail(LeeEmail("email002"));
     MM.addMail(LeeEmail("email003"));
     MM.addMail(LeeEmail("email004"));*/
@@ -72,7 +72,7 @@ int main() {
 
     dos.from = "Hermes";
     dos.subject = "Las computadoras analógicas";
-    dos.content = "Los ordenadores analógicos comenzaron a construirse a principios del siglo XX. Los primeros modelos realizaban los cálculos mediante ejes y engranajes giratorios. Con estas máquinas se evaluaban las aproximaciones numéricas de ecuaciones demasiado difíciles como para poder ser resueltas mediante otros métodos. Durante las dos guerras mundiales se utilizaron sistemas informáticos analógicos, primero mecánicos y más tarde eléctricos, para predecir la trayectoria de los torpedos en los submarinos y para el manejo a distancia de las bombas en la aviación.";
+    dos.content = "Los ordenadores. analógicos comenzaron a construirse a principios del siglo XX. Los primeros modelos realizaban los cálculos mediante ejes y engranajes giratorios. Con estas máquinas se evaluaban las aproximaciones numéricas de ecuaciones demasiado difíciles como para poder ser resueltas mediante otros métodos. Durante las dos guerras mundiales se utilizaron sistemas informáticos analógicos, primero mecánicos y más tarde eléctricos, para predecir la trayectoria de los torpedos en los submarinos y para el manejo a distancia de las bombas en la aviación.";
     dos.id = 9959;
     dos.date = "20191201132526";
     dos.to = "Poseidon";
@@ -124,8 +124,8 @@ int main() {
     for (int i = 0; i < v4.size(); ++i)
         v4[i].imprimir();
 
-    cout << endl << "-----------------BY QUERY   'monte'-----------------" << endl;
-    vector<email> v5 = MM.getByQuery("monte");
+    cout << endl << "-----------------BY QUERY   'multiplicar'-----------------" << endl;
+    vector<email> v5 = MM.getByQuery("multiplicar");
     for (int i = 0; i < v5.size(); ++i)
         v5[i].imprimir();
 
@@ -138,6 +138,6 @@ int main() {
     for (int i = 0; i < v6.size(); ++i)
         v6[i].imprimir();
 
-    cout << "hola";
+    cout << "-----------------FINISH-----------------";
     return 0;
 }
