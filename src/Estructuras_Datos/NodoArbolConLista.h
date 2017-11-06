@@ -128,21 +128,29 @@ void NodoArbolConLista<T, K>::inorder(vector<K> &R) {
 
 template<class T, class K>
 void NodoArbolConLista<T, K>::inorderRango(vector<K> &R, string desde, string hasta) {
-    if (izq != nullptr && this->getDato() >= desde)
-        izq->inorder(R);
-
-    if (this->getDato() >= desde)
-        if (this->getDato() <= hasta) {
+    if (this->getDato() > hasta) {
+        if (izq != nullptr) {
+            izq->inorderRango(R, desde, hasta);
+        }
+    } else {
+        if (this->getDato() < desde) {
+            if (der != nullptr) {
+                der->inorderRango(R, desde, hasta);
+            }
+        } else {
             Nodo<Nodo<K> *> *aux = this->listaPtr.getInicio();
             while (aux != nullptr) {
                 R.push_back(aux->getDato()->getDato());
                 aux = aux->getNext();
             }
+            if (izq != nullptr) {
+                izq->inorderRango(R, desde, hasta);
+            }
+            if (der != nullptr) {
+                der->inorderRango(R, desde, hasta);
+            }
         }
-
-
-    if (der != nullptr && this->getDato() <= hasta)
-        der->inorder(R);
+    }
 }
 
 template<class T, class K>

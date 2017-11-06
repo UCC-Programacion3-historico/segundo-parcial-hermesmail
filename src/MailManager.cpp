@@ -4,7 +4,6 @@
  * Constructor
  */
 MailManager::MailManager() {
-
 }
 
 
@@ -16,18 +15,20 @@ void MailManager::addMail(email m) {
     lista_Emails.insertarPrimero(m);
     Nodo<email> *tmpInicio = lista_Emails.getInicio();      //para evitar llamadas a metodos
     arbol_ID.put(m.id, tmpInicio);
-    arbol_Remitentes.put(m.from, tmpInicio);
+    arbol_Remitentes.put(corrige(m.from), tmpInicio);
     arbol_Fecha.put(bobfara(m.date), tmpInicio);
 
-    string tmp = m.subject + ' ' + m.content;
-    for (int i = 0; tmp[i] != '\0'; ++i) {
+    string tmpTexto = m.subject + ' ' + m.content + ' ' + '\0';
+    int i = 0;
+    while (tmpTexto[i] != '\0') {
         string palabra = "";
-        while (tmp[i] != ' ' && tmp[i] != '\0' && tmp[i] != '\r') {
-            //may min puntos etc.
-            palabra += tmp[i];
+        while (tmpTexto[i] != ' ') {
+            palabra += tmpTexto[i];
             i++;
         }
-        arbol_Diccionario.put(palabra, tmpInicio);
+        if (palabra != "")
+            arbol_Diccionario.put(corrige(palabra), tmpInicio);
+        i++;
     }
 }
 
@@ -40,22 +41,27 @@ void MailManager::deleteMail(unsigned long id) {
     Nodo<email> *aEliminar = arbol_ID.getLista(
             id).getInicio()->getDato();    //apunta al que queremos eliminar de la lista principal
     string tmpFecha = bobfara(aEliminar->getDato().date);
-    string tmpRemitente = aEliminar->getDato().from;
-    string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content;
+    string tmpRemitente = corrige(aEliminar->getDato().from);
+//    string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content;
 
     arbol_Fecha.remove(tmpFecha, aEliminar);
     arbol_Remitentes.remove(tmpRemitente, aEliminar);
 
-
-    for (int i = 0; tmpTexto[i] != '\0'; ++i) {
+    string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content + ' ' + '\0';
+    int i = 0;
+    while (tmpTexto[i] != '\0') {
         string palabra = "";
-        while (tmpTexto[i] != ' ' && tmpTexto[i] != '\0') {
-            //may min puntos etc.
+        while (tmpTexto[i] != ' ') {
             palabra += tmpTexto[i];
             i++;
         }
-        arbol_Diccionario.remove(palabra, aEliminar);
+        if (palabra != "")
+            try {
+                arbol_Diccionario.remove(corrige(palabra), aEliminar);
+            }catch (int e){}
+        i++;
     }
+
     arbol_ID.remove(id, aEliminar);
     lista_Emails.remover(aEliminar->getDato());
 }
@@ -81,6 +87,8 @@ vector<email> MailManager::getSortedByDate() {
  * @return lista de mails ordenados
  */
 vector<email> MailManager::getSortedByDate(string desde, string hasta) {
+    if (atoi(hasta.c_str()) < atoi(desde.c_str()))          //hasta es menor a desde
+        throw -8;
     vector<email> ret;
     arbol_Fecha.inorderRango(ret, bobfara(desde), bobfara(hasta));
     return ret;
@@ -105,9 +113,10 @@ vector<email> MailManager::getSortedByFrom() {
  */
 vector<email> MailManager::getByFrom(string from) {
     vector<email> ret;
-    Nodo<email> *R = arbol_Remitentes.getLista(from).getInicio()->getDato();      //que devuelva solo el puntero a nodo
+    from = corrige(from);
+    Nodo<Nodo<email> *> *R = arbol_Remitentes.getLista(from).getInicio();      //que devuelva solo el puntero a nodo
     while (R != nullptr) {
-        ret.push_back(R->getDato());
+        ret.push_back(R->getDato()->getDato());
         R = R->getNext();
     }
     return ret;
@@ -122,9 +131,10 @@ vector<email> MailManager::getByFrom(string from) {
  */
 vector<email> MailManager::getByQuery(string query) {
     vector<email> ret;
-    Nodo<email> *R = arbol_Diccionario.getLista(query).getInicio()->getDato();
+    query = corrige(query);
+    Nodo<Nodo<email> *> *R = arbol_Diccionario.getLista(query).getInicio();
     while (R != nullptr) {
-        ret.push_back(R->getDato());
+        ret.push_back(R->getDato()->getDato());
         R = R->getNext();
     }
     return ret;
@@ -137,5 +147,20 @@ string MailManager::bobfara(string c) {
 //    for (int i = 0; i < 8; ++i)
 //        R[i] = num[int(c[i])];      // ojo qué devuelve int ()
 //    return R;
+//    c[8] = '\0';
+    string R = "";
+    for (int i = 0; i < 8; ++i)
+        R += c[i];
+    return R;
+}
+
+string MailManager::corrige(string s) {
+    char *c = &s[0];
+    for (int i = 0; i < s.length(); ++i) {
+        if (*c == '.') {
+            c[i] = c[i + 1];
+        } else
+            c[i] = tolower(c[i]);
+    }
     return c;
 }

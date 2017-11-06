@@ -23,6 +23,7 @@ private:
     //Arbol binario que almacena las fechas de los emails ordenandos cronologicamente
 
     string bobfara(string);
+    string corrige(string);
     //funcion que calcula el bobfara a 9 de un numero
 
 public:

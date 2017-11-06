@@ -87,7 +87,7 @@ void Lista<T>::remover(T dato) {
         return;
     }
 
-    while (aux->getNext()->getDato() != dato && aux->getNext() != nullptr) {
+    while (aux->getNext() != nullptr && aux->getNext()->getDato() != dato) {
         aux = aux->getNext();
     }
 
@@ -100,22 +100,6 @@ void Lista<T>::remover(T dato) {
     aux->setNext(tmp->getNext());
     delete tmp;
 }
-
-/*template<class T>
-T Lista<T>::getDato(unsigned int n) {
-    int i = 0;
-    Nodo<T> *aux = inicio;
-    while (i < n && aux != nullptr) {
-        aux = aux->getNext();
-        i++;
-    }
-
-    if (aux == nullptr)
-        throw 1;
-
-    return aux->getDato();
-}*/
-
 
 
 #endif //MAILMANAGER_LISTA_H
