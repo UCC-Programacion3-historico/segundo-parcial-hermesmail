@@ -167,7 +167,9 @@ string MailManager::bobfara(string c) {
 string MailManager::corrige(string s) {
     string R = "";
     for (int i = 0; i < s.length(); ++i) {
-        if ((s[i] >= '0' && s[i] <= '9') || (s[i] >= 'A' && s[i] <= 'Z') || (s[i] >= 'a' && s[i] <= 'z'))
+        if ((s[i] >= '0' && s[i] <= '9') || (s[i] >= 'A' && s[i] <= 'Z') || (s[i] >= 'a' && s[i] <= 'z') ||
+            (s[i] >= 'á' && s[i] <= 'Ñ') || s[i] == 'é')
+            //||(s[i] >= 'á' && s[i] <= 'Ñ') || s[i] == 'é'
             R += tolower(s[i]);
     }
     return R;

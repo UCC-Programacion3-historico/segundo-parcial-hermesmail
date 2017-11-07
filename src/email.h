@@ -10,6 +10,8 @@ using namespace std;
  * Clase con los datos del mail
  */
 class email {
+private:
+//    string gringa(string);
 public:
     unsigned long id;
     string from;
