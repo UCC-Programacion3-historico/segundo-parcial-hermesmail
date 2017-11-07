@@ -16,9 +16,9 @@ public:
 
     ~ArbolBinarioConLista();
 
-    void put(T, Nodo<K> *);
+    void put(T, K);
 
-    void remove(T, Nodo<K> *);
+    void remove(T, K);
 
     void inorder(vector<K> &);
 
@@ -26,7 +26,7 @@ public:
 
     bool esVacio();
 
-    Lista<Nodo<K> *> &getLista(T);
+    Lista<K> &getLista(T);
 };
 
 template<class T, class K>
@@ -40,7 +40,7 @@ ArbolBinarioConLista<T, K>::~ArbolBinarioConLista() {
 }
 
 template<class T, class K>
-void ArbolBinarioConLista<T, K>::put(T dato, Nodo<K> *ptr) {
+void ArbolBinarioConLista<T, K>::put(T dato, K ptr) {
     if (raiz == nullptr) {
         raiz = new NodoArbolConLista<T, K>(dato, ptr);
     } else {
@@ -49,7 +49,7 @@ void ArbolBinarioConLista<T, K>::put(T dato, Nodo<K> *ptr) {
 }
 
 template<class T, class K>
-void ArbolBinarioConLista<T, K>::remove(T dato, Nodo<K> *ptr) {//ptr apunta al nodo con el mail en la lista principal
+void ArbolBinarioConLista<T, K>::remove(T dato, K ptr) {
     NodoArbolConLista<T, K> *aux;
     if (raiz == nullptr)throw 1;
     aux = raiz;
@@ -76,7 +76,7 @@ bool ArbolBinarioConLista<T, K>::esVacio() {
 }
 
 template<class T, class K>
-Lista<Nodo<K> *> &ArbolBinarioConLista<T, K>::getLista(T d) {
+Lista<K> &ArbolBinarioConLista<T, K>::getLista(T d) {
     if (raiz != nullptr)
         return raiz->getLista(d);
     throw -5;

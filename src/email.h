@@ -10,9 +10,6 @@ using namespace std;
  * Clase con los datos del mail
  */
 class email {
-private:
-//    string fechear(string);
-
 public:
     unsigned long id;
     string from;
@@ -26,6 +23,8 @@ public:
     bool operator==(const email &);
 
     bool operator!=(const email &);
+
+    void operator=(const email &);
 };
 
 

@@ -10,27 +10,27 @@ class NodoArbolConLista {
 private:
     NodoArbolConLista<T, K> *izq, *der;
     T dato;
-    Lista<Nodo<K> *> listaPtr;
+    Lista<K> listaPtr;
 public:
-    NodoArbolConLista(T, Nodo<K> *);
+    NodoArbolConLista(T, K);
 
     T getDato();
 
-    void put(T, Nodo<K> *);
+    void put(T, K);
 
     void put(NodoArbolConLista<T, K> *);
 
-    NodoArbolConLista<T, K> *remover(T, Nodo<K> *);
+    NodoArbolConLista<T, K> *remover(T, K);
 
-    void inorder(vector<K> &); //ver tipo de retorno
+    void inorder(vector<K> &);
 
     void inorderRango(vector<K> &, string, string);
 
-    Lista<Nodo<K> *> &getLista(T);
+    Lista<K> &getLista(T);
 };
 
 template<class T, class K>
-NodoArbolConLista<T, K>::NodoArbolConLista(T dato, Nodo<K> *ptr) {
+NodoArbolConLista<T, K>::NodoArbolConLista(T dato, K ptr) {
     this->dato = dato;
     this->listaPtr.insertarPrimero(ptr);
     izq = nullptr;
@@ -43,7 +43,7 @@ T NodoArbolConLista<T, K>::getDato() {
 }
 
 template<class T, class K>
-void NodoArbolConLista<T, K>::put(T d, Nodo<K> *ptr) {
+void NodoArbolConLista<T, K>::put(T d, K ptr) {
     if (d == dato) {
         if (listaPtr.getInicio()->getDato() != ptr)
             this->listaPtr.insertarPrimero(ptr);
@@ -66,8 +66,7 @@ void NodoArbolConLista<T, K>::put(T d, Nodo<K> *ptr) {
 
 template<class T, class K>
 void NodoArbolConLista<T, K>::put(NodoArbolConLista<T, K> *ptr) {
-    //hay forma de que sean iguales??
-    if (ptr == nullptr) return;// ojo con esto
+    if (ptr == nullptr) return;
     if (ptr->getDato() < this->dato) {
         if (izq == nullptr)
             izq = ptr;
@@ -82,13 +81,13 @@ void NodoArbolConLista<T, K>::put(NodoArbolConLista<T, K> *ptr) {
 }
 
 template<class T, class K>
-NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::remover(T d, Nodo<K> *ptr) {
+NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::remover(T d, K ptr) {
     NodoArbolConLista<T, K> *aux;
     if (d == dato) {
-        this->listaPtr.remover(ptr);   //T de esta lista Nodo<K> *
+        this->listaPtr.remover(ptr);   //T de esta lista Nodo<email> *
         if (listaPtr.esVacia()) {
             if (der != nullptr) {
-                der->put(izq);                     // ATENCION OJO AL PIOJO
+                der->put(izq);
                 return der;
             }
             return izq;
@@ -117,10 +116,10 @@ NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::remover(T d, Nodo<K> *ptr) {
 template<class T, class K>
 void NodoArbolConLista<T, K>::inorder(vector<K> &R) {
     if (izq != nullptr)izq->inorder(R);
-    Nodo<Nodo<email> *> *aux = listaPtr.getInicio();
+    Nodo<K> *aux = listaPtr.getInicio();
 
     while (aux != nullptr) {
-        R.push_back(aux->getDato()->getDato());
+        R.push_back(aux->getDato());
         aux = aux->getNext();
     }
     if (der != nullptr)der->inorder(R);
@@ -138,9 +137,9 @@ void NodoArbolConLista<T, K>::inorderRango(vector<K> &R, string desde, string ha
                 der->inorderRango(R, desde, hasta);
             }
         } else {
-            Nodo<Nodo<K> *> *aux = this->listaPtr.getInicio();
+            Nodo<K> *aux = this->listaPtr.getInicio();
             while (aux != nullptr) {
-                R.push_back(aux->getDato()->getDato());
+                R.push_back(aux->getDato());
                 aux = aux->getNext();
             }
             if (izq != nullptr) {
@@ -154,9 +153,9 @@ void NodoArbolConLista<T, K>::inorderRango(vector<K> &R, string desde, string ha
 }
 
 template<class T, class K>
-Lista<Nodo<K> *> &NodoArbolConLista<T, K>::getLista(T d) {
+Lista<K> &NodoArbolConLista<T, K>::getLista(T d) {
     if (this->dato == d)
-        return this->listaPtr;      //capaz que haiga que copiarlos
+        return this->listaPtr;
     if (this->dato > d && this->izq != nullptr)
         return izq->getLista(d);
     if (this->dato < d && this->der != nullptr)

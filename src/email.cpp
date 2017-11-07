@@ -1,11 +1,7 @@
 #include "email.h"
 
-//string email::fechear(string d) {
-//    string R;
-//}
-
 void email::imprimir() {
-    cout << endl<<id<<endl << from << endl << to << endl << date << endl << subject << endl << content << endl;
+    cout << endl << id << endl << from << endl << to << endl << date << endl << subject << endl << content << endl;
 }
 
 bool email::operator==(const email &E) {
@@ -16,4 +12,11 @@ bool email::operator!=(const email &E) {
     return (this->id != E.id);
 }
 
-
+void email::operator=(const email &E) {
+    id = E.id;
+    from = E.from;
+    to = E.to;
+    date = E.date;
+    subject = E.subject;
+    content = E.content;
+}

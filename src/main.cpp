@@ -14,14 +14,7 @@ email LeeEmail(string nombre_txt) {
     string tmp[6];
     string aux;
     int i = 0;
-    while (!txt.eof()) {
-        getline(txt, aux);
-        for (int j = 0; aux[j] != '\r' && aux[j] != '\n' && aux[j] != '\0'; j++)
-            i++;
-    }   // obligatoriamente cada campo tiene que estar en una unica linea
-//    for (int j = 1; j < 5; ++j) {
-//        tmp[j][tmp[j].length()-1]='\0';
-//    }
+
 
     R.id = atoi(tmp[0].c_str());
     R.from = tmp[1];
@@ -105,7 +98,7 @@ int main() {
     cout << endl << "-----------------SORTED BY DATE-----------------" << endl;
     vector<email> v1 = MM.getSortedByDate();
     for (int i = 0; i < v1.size(); ++i)
-        v1[v1.size() - i - 1].imprimir();
+        v1[i].imprimir();
 
 
     cout << endl << "-----------------SORTED BY FROM-----------------" << endl;
@@ -113,7 +106,7 @@ int main() {
     for (int i = 0; i < v2.size(); ++i)
         v2[i].imprimir();
 
-    cout << endl << "-----------------SORTED BY DATE   20171031 , 20171102-----------------" << endl;
+    cout << endl << "-----------------SORTED BY DATE   20171015 , 20171102-----------------" << endl;
     vector<email> v3 = MM.getSortedByDate("20171015", "20171102");
     //vector<email> v3 = MM.getSortedByDate("20171031", "20171102");
     for (int i = 0; i < v3.size(); ++i)
@@ -138,6 +131,6 @@ int main() {
     for (int i = 0; i < v6.size(); ++i)
         v6[i].imprimir();
 
-    cout << "-----------------FINISH-----------------";
+    cout << endl << "-----------------FINISH-----------------" << endl;
     return 0;
 }
