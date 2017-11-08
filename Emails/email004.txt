@@ -3,4 +3,4 @@ Hermes
 Rodo
 20181201132526
 Las computadoras anal?gicas
-Los ordenadores anal?gicos comenzaron a construirse a principios del siglo XX. Los primeros modelos realizaban los c?lculos mediante ejes y engranajes giratorios. Con estas m?quinas se evaluaban las aproximaciones num?ricas de ecuaciones demasiado dif?ciles como para poder ser resueltas mediante otros m?todos. Durante las dos guerras mundiales se utilizaron sistemas inform?ticos anal?gicos, primero mec?nicos y m?s tarde el?ctricos, para predecir la trayectoria de los torpedos en los submarinos y para el manejo a distancia de las bombas en la aviaci?n.
+ Los ordenadores anal?gicos comenzaron a construirse a principios del siglo XX. Los primeros modelos realizaban los c?lculos mediante ejes y engranajes giratorios. Con estas m?quinas se evaluaban las aproximaciones num?ricas de ecuaciones demasiado dif?ciles como para poder ser resueltas mediante otros m?todos. Durante las dos guerras mundiales se utilizaron sistemas inform?ticos anal?gicos, primero mec?nicos y m?s tarde el?ctricos, para predecir la trayectoria de los torpedos en los submarinos y para el manejo a distancia de las bombas en la aviaci?n.

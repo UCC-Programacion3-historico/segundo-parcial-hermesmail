@@ -36,7 +36,7 @@ email LeeEmail(string nombre_txt) {
 }
 
 int main() {
-    std::cout << "Super gestor de mails" << std::endl;
+    cout << "HERMESMAIL" << endl;
     MailManager MM;
 
     MM.addMail(LeeEmail("email000"));
@@ -45,7 +45,92 @@ int main() {
     MM.addMail(LeeEmail("email003"));
     MM.addMail(LeeEmail("email004"));
 
-    vector<email> v1 = MM.getSortedByDate();
+    int n;
+    vector<email> v;
+    string anio,mes,dia,desde,hasta,rem,pal;
+    do {
+        cout << endl << "Seleccione una opcion:" << endl
+             << " 1)Mostrar mails ordenados por fecha" << endl
+             << " 2)Mostrar mails ordenados por fecha (con rango)" << endl
+             << " 3)Mostrar mails ordenados por remitentes" << endl
+             << " 4)Buscar mails por remitente" << endl
+             << " 5)Buscar mails por palabra" << endl
+             << " 6)Eliminar mail" << endl
+             << " 7)Salir" << endl;
+        cin >> n;
+        switch (n) {
+            case 1:
+                v = MM.getSortedByDate();
+                for (int i = 0; i < v.size(); ++i)
+                    v[i].imprimir();
+                break;
+
+            case 2:
+                desde="";
+                hasta="";
+                cout<<endl<<"Ingrese desde que fecha buscar:";
+                cout<<endl<<" Ingrese anio: "<<endl;
+                cin>>anio;
+                cout<<endl<<" Ingrese mes: "<<endl;
+                cin>>mes;
+                cout<<endl<<" Ingrese dia: "<<endl;
+                cin>>dia;
+                desde+=anio;
+                desde+=mes;
+                desde+=dia;
+                cout<<endl<<"Ingrese hasta que fecha buscar:";
+                cout<<endl<<" Ingrese anio: "<<endl;
+                cin>>anio;
+                cout<<endl<<" Ingrese mes: "<<endl;
+                cin>>mes;
+                cout<<endl<<" Ingrese dia: "<<endl;
+                cin>>dia;
+                hasta+=anio;
+                hasta+=mes;
+                hasta+=dia;
+                v = MM.getSortedByDate(desde,hasta);
+                for (int i = 0; i < v.size(); ++i)
+                    v[i].imprimir();
+                break;
+
+            case 3:
+                v = MM.getSortedByFrom();
+                for (int i = 0; i < v.size(); ++i)
+                    v[i].imprimir();
+                break;
+
+            case 4:
+                cout<<endl<<"Ingrese remitente a buscar:"<<endl;
+                cin>>rem;
+                v = MM.getByFrom(rem);
+                for (int i = 0; i < v.size(); ++i)
+                    v[i].imprimir();
+                break;
+
+            case 5:
+                cout<<endl<<"Ingrese palabra a buscar:"<<endl;
+                cin>>pal;
+                v = MM.getByQuery(pal);
+                for (int i = 0; i < v.size(); ++i)
+                    v[i].imprimir();
+                break;
+
+            case 6:
+                for (int i = 0; i < v.size(); ++i)
+                    v[i].imprimir();
+                break;
+
+            case 7:
+
+                break;
+
+            default:
+                cout << "Opcion incorrecta" << endl;
+                break;
+        }
+    } while (n != 7);
+
+    /*vector<email> v1 = MM.getSortedByDate();
     for (int i = 0; i < v1.size(); ++i)
         v1[i].imprimir();
 
@@ -69,7 +154,7 @@ int main() {
     vector<email> v4 = MM.getSortedByDate("20171101", "20171101");
     for (int i = 0; i < v4.size(); ++i)
         v4[i].imprimir();
-
+*/
 
 //    email uno, dos, tres, cuatro, cinco;
 //

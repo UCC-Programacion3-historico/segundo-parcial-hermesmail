@@ -15,17 +15,17 @@ void MailManager::addMail(email m) {
     lista_Emails.insertarPrimero(m);
     Nodo<email> *tmpInicio = lista_Emails.getInicio();
     arbol_ID.put(m.id, tmpInicio);
-    arbol_Remitentes.put(corrige(m.from), tmpInicio);
+    arbol_Remitentes.put(m.from, tmpInicio);
     arbol_Fecha.put(bobfara(m.date), tmpInicio);
 
     string tmpTexto = m.subject + ' ' + m.content + ' ' + '\0';
-    tmpTexto=corrige(tmpTexto);
+//    tmpTexto=corrige(tmpTexto);
     int i = 0;
     while (tmpTexto[i] != '\0') {
         string palabra = "";
         while ((tmpTexto[i] >= '0' && tmpTexto[i] <= '9') || (tmpTexto[i] >= 'A' && tmpTexto[i] <= 'Z') ||
                (tmpTexto[i] >= 'a' && tmpTexto[i] <= 'z')) {
-            palabra += tmpTexto[i];
+            palabra += tolower(tmpTexto[i]);
             i++;
         }
         if (palabra != "")
@@ -43,19 +43,19 @@ void MailManager::deleteMail(unsigned long id) {
     Nodo<email> *aEliminar = arbol_ID.getLista(id).getInicio()->getDato();
     //apunta al que queremos eliminar de la lista principal
     string tmpFecha = bobfara(aEliminar->getDato().date);
-    string tmpRemitente = corrige(aEliminar->getDato().from);
+    string tmpRemitente = aEliminar->getDato().from;
 
     arbol_Fecha.remove(tmpFecha, aEliminar);
     arbol_Remitentes.remove(tmpRemitente, aEliminar);
 
     string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content + ' ' + '\0';
     int i = 0;
-    tmpTexto=corrige(tmpTexto);
+//    tmpTexto=corrige(tmpTexto);
     while (tmpTexto[i] != '\0') {
         string palabra = "";
         while ((tmpTexto[i] >= '0' && tmpTexto[i] <= '9') || (tmpTexto[i] >= 'A' && tmpTexto[i] <= 'Z') ||
                (tmpTexto[i] >= 'a' && tmpTexto[i] <= 'z')) {
-            palabra += tmpTexto[i];
+            palabra += tolower(tmpTexto[i]);
             i++;
         }
         if (palabra != "")
@@ -127,7 +127,6 @@ vector<email> MailManager::getSortedByFrom() {
  */
 vector<email> MailManager::getByFrom(string from) {
     vector<email> ret;
-    from = corrige(from);
     Nodo<Nodo<email> *> *R = arbol_Remitentes.getLista(from).getInicio();
     while (R != nullptr) {
         ret.push_back(R->getDato()->getDato());

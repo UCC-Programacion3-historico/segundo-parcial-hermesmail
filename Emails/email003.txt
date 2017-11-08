@@ -3,5 +3,5 @@ Ades
 Afrodita
 20171101232545
 Las computadoras son cheveres
-El inventor franc?s Joseph Marie Jacquard, al dise?ar un telar autom?tico, utiliz? delgadas placas de madera perforadas para controlar el tejido utilizado en los dise?os complejos. Durante la d?cada de 1880 el estad?stico estadounidense Herman Hollerith concibi? la idea de utilizar tarjetas perforadas, similares a las placas de Jacquard, para procesar datos. Hollerith consigui? compilar la informaci?n estad?stica destinada al censo de poblaci?n de 1890 de Estados Unidos mediante la utilizaci?n de un sistema que hac?a pasar tarjetas perforadas sobre contactos el?ctricos.
+ El inventor franc?s Joseph Marie Jacquard, al dise?ar un telar autom?tico, utiliz? delgadas placas de madera perforadas para controlar el tejido utilizado en los dise?os complejos. Durante la d?cada de 1880 el estad?stico estadounidense Herman Hollerith concibi? la idea de utilizar tarjetas perforadas, similares a las placas de Jacquard, para procesar datos. Hollerith consigui? compilar la informaci?n estad?stica destinada al censo de poblaci?n de 1890 de Estados Unidos mediante la utilizaci?n de un sistema que hac?a pasar tarjetas perforadas sobre contactos el?ctricos.
 
