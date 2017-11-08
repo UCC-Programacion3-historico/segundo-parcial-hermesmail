@@ -49,19 +49,19 @@ int main() {
     for (int i = 0; i < v1.size(); ++i)
         v1[i].imprimir();
 
-    cout << "\n\n********************Get by Query : analógicas*********************\n";
-    vector<email> v2 = MM.getByQuery("analógicas");
+    cout << "\n\n********************Get by Query : aviaci*********************\n";
+    vector<email> v2 = MM.getByQuery("aviaci");
     for (int i = 0; i < v2.size(); ++i)
         v2[i].imprimir();
 
-    cout << "\n\n********************Get by Query : ol.imPO*********************\n";
-    vector<email> v3 = MM.getByQuery("ol.imPO");
+    cout << "\n\n********************Get by Query : oLimpo*********************\n";
+    vector<email> v3 = MM.getByQuery("oLimpo");
     for (int i = 0; i < v3.size(); ++i)
         v3[i].imprimir();
 
     MM.deleteMail(0);
     cout << "\n\nDespues de borrrrrar 0\n";
-    v3 = MM.getByQuery("ol.imPO");
+    v3 = MM.getByQuery("oLimpo");
     for (int i = 0; i < v3.size(); ++i)
         v3[i].imprimir();
 

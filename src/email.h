@@ -27,6 +27,8 @@ public:
     bool operator!=(const email &);
 
     void operator=(const email &);
+
+    string gringa(string);
 };
 
 

@@ -36,7 +36,10 @@ ArbolBinarioConLista<T, K>::ArbolBinarioConLista() {
 
 template<class T, class K>
 ArbolBinarioConLista<T, K>::~ArbolBinarioConLista() {
-
+    if (raiz != nullptr) {
+        raiz->vaciar();
+        raiz = nullptr;
+    }
 }
 
 template<class T, class K>

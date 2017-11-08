@@ -27,6 +27,8 @@ public:
     void inorderRango(vector<K> &, string, string);
 
     Lista<K> &getLista(T);
+
+    void vaciar();
 };
 
 template<class T, class K>
@@ -163,4 +165,12 @@ Lista<K> &NodoArbolConLista<T, K>::getLista(T d) {
     throw -1;
 }
 
+template<class T, class K>
+void NodoArbolConLista<T, K>::vaciar() {
+    if (izq != nullptr)
+        izq->vaciar();
+    if (der != nullptr)
+        der->vaciar();
+    delete this;
+};
 #endif //MAILMANAGER_NODOARBOLCONLISTA_H

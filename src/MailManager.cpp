@@ -19,15 +19,17 @@ void MailManager::addMail(email m) {
     arbol_Fecha.put(bobfara(m.date), tmpInicio);
 
     string tmpTexto = m.subject + ' ' + m.content + ' ' + '\0';
+    tmpTexto=corrige(tmpTexto);
     int i = 0;
     while (tmpTexto[i] != '\0') {
         string palabra = "";
-        while (tmpTexto[i] != ' ') {
+        while ((tmpTexto[i] >= '0' && tmpTexto[i] <= '9') || (tmpTexto[i] >= 'A' && tmpTexto[i] <= 'Z') ||
+               (tmpTexto[i] >= 'a' && tmpTexto[i] <= 'z')) {
             palabra += tmpTexto[i];
             i++;
         }
         if (palabra != "")
-            arbol_Diccionario.put(corrige(palabra), tmpInicio);
+            arbol_Diccionario.put(palabra, tmpInicio);
         i++;
     }
 }
@@ -48,15 +50,17 @@ void MailManager::deleteMail(unsigned long id) {
 
     string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content + ' ' + '\0';
     int i = 0;
+    tmpTexto=corrige(tmpTexto);
     while (tmpTexto[i] != '\0') {
         string palabra = "";
-        while (tmpTexto[i] != ' ') {
+        while ((tmpTexto[i] >= '0' && tmpTexto[i] <= '9') || (tmpTexto[i] >= 'A' && tmpTexto[i] <= 'Z') ||
+               (tmpTexto[i] >= 'a' && tmpTexto[i] <= 'z')) {
             palabra += tmpTexto[i];
             i++;
         }
         if (palabra != "")
             try {
-                arbol_Diccionario.remove(corrige(palabra), aEliminar);
+                arbol_Diccionario.remove(palabra, aEliminar);
             } catch (int e) {}
         i++;
     }
@@ -152,25 +156,25 @@ vector<email> MailManager::getByQuery(string query) {
 
 
 string MailManager::bobfara(string c) {
-//    char num[] = {'9', '8', '7', '6', '5', '4', '3', '2', '1', '0'};
-//    string R = "";
-//    for (int i = 0; i < 8; ++i)
-//        R[i] = num[int(c[i])];      // ojo qué devuelve int ()
-//    return R;
-//    c[8] = '\0';
     string R = "";
     for (int i = 0; i < 8; ++i)
         R += c[i];
     return R;
 }
 
-string MailManager::corrige(string s) {
+string MailManager::corrige(string tmpTexto) {
     string R = "";
-    for (int i = 0; i < s.length(); ++i) {
-        if ((s[i] >= '0' && s[i] <= '9') || (s[i] >= 'A' && s[i] <= 'Z') || (s[i] >= 'a' && s[i] <= 'z') ||
-            (s[i] >= 'á' && s[i] <= 'Ñ') || s[i] == 'é')
-            //||(s[i] >= 'á' && s[i] <= 'Ñ') || s[i] == 'é'
-            R += tolower(s[i]);
+    //int cantC = 7;
+    int cantC = 6;
+    char espaniol[cantC] = {'\160', '\130', '\161', '\162', '\163', /*'\129',*/ '\164'};
+    char noespaniol[cantC] = {'a', 'e', 'i', 'o', 'u', /*'u',*/ 'n'};
+    for (int i = 0; i < tmpTexto.length(); ++i) {
+        for (int j = 0; j < cantC; ++j) {
+            if (R[i] == espaniol[j])
+                R[i] = noespaniol[j];
+        }
+        R += tolower(tmpTexto[i]);
     }
+
     return R;
 }
