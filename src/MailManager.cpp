@@ -19,7 +19,6 @@ void MailManager::addMail(email m) {
     arbol_Fecha.put(bobfara(m.date), tmpInicio);
 
     string tmpTexto = m.subject + ' ' + m.content + ' ' + '\0';
-//    tmpTexto=corrige(tmpTexto);
     int i = 0;
     while (tmpTexto[i] != '\0') {
         string palabra = "";
@@ -50,7 +49,6 @@ void MailManager::deleteMail(unsigned long id) {
 
     string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content + ' ' + '\0';
     int i = 0;
-//    tmpTexto=corrige(tmpTexto);
     while (tmpTexto[i] != '\0') {
         string palabra = "";
         while ((tmpTexto[i] >= '0' && tmpTexto[i] <= '9') || (tmpTexto[i] >= 'A' && tmpTexto[i] <= 'Z') ||
@@ -94,6 +92,12 @@ vector<email> MailManager::getSortedByDate() {
  * @return lista de mails ordenados
  */
 vector<email> MailManager::getSortedByDate(string desde, string hasta) {
+    if (!fechaValida(desde) && !fechaValida(hasta))
+        throw -50;
+    if (!fechaValida(desde))
+        throw -10;
+    if (!fechaValida(hasta))
+        throw -20;
     if (atoi(hasta.c_str()) < atoi(desde.c_str()))          //hasta es menor a desde
         throw -8;
     vector<Nodo<email> *> tmp;
@@ -144,11 +148,21 @@ vector<email> MailManager::getByFrom(string from) {
  */
 vector<email> MailManager::getByQuery(string query) {
     vector<email> ret;
-    query = corrige(query);
-    Nodo<Nodo<email> *> *R = arbol_Diccionario.getLista(query).getInicio();
-    while (R != nullptr) {
-        ret.push_back(R->getDato()->getDato());
-        R = R->getNext();
+    int i = 0;
+    string palabra = "";
+
+    while ((query[i] >= '0' && query[i] <= '9') || (query[i] >= 'A' && query[i] <= 'Z') ||
+           (query[i] >= 'a' && query[i] <= 'z')) {
+        palabra += tolower(query[i]);
+        i++;
+    }
+
+    if (palabra != "") {
+        Nodo<Nodo<email> *> *R = arbol_Diccionario.getLista(palabra).getInicio();
+        while (R != nullptr) {
+            ret.push_back(R->getDato()->getDato());
+            R = R->getNext();
+        }
     }
     return ret;
 }
@@ -156,24 +170,35 @@ vector<email> MailManager::getByQuery(string query) {
 
 string MailManager::bobfara(string c) {
     string R = "";
-    for (int i = 0; i < 8; ++i)
+    for (int i = 0; i < 10; ++i)
         R += c[i];
     return R;
 }
 
-string MailManager::corrige(string tmpTexto) {
-    string R = "";
-    //int cantC = 7;
-    int cantC = 6;
-    char espaniol[cantC] = {'\160', '\130', '\161', '\162', '\163', /*'\129',*/ '\164'};
-    char noespaniol[cantC] = {'a', 'e', 'i', 'o', 'u', /*'u',*/ 'n'};
-    for (int i = 0; i < tmpTexto.length(); ++i) {
-        for (int j = 0; j < cantC; ++j) {
-            if (R[i] == espaniol[j])
-                R[i] = noespaniol[j];
+bool MailManager::fechaValida(string fecha) {
+    string d = "", m = "", a = "";
+    d += fecha[6];
+    d += fecha[7];
+    m += fecha[4];
+    m += fecha[5];
+    a += fecha[0];
+    a += fecha[1];
+    a += fecha[2];
+    a += fecha[3];
+    if (d >= "01" && d <= "31" && m >= "01" && m <= "12") {
+        if ((d < "29") || (m == "01") || (m == "03") || (m == "05") || (m == "07") || (m == "08") || (m == "10") ||
+            (m == "12"))
+            return true;
+        else {
+            if (d < "31" && m != "02")
+                return true;
+            else {
+                if (atoi(a.c_str()) % 4 == 0 && d == "29")
+                    return true;
+                else
+                    return false;
+            }
         }
-        R += tolower(tmpTexto[i]);
-    }
-
-    return R;
+    } else
+        return false;
 }

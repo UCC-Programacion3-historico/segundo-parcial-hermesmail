@@ -1,8 +1,9 @@
 #include "email.h"
 
-void email::imprimir() {
-    cout << endl << id << endl << from << endl << to << endl << gringa(date) << endl << subject << endl << content
-         << endl;
+void email::imprimir(bool mostID, bool mostContenido) {
+    if (mostID)cout << endl << id;
+    cout << endl << from << endl << to << endl << date << endl << subject << endl;
+    if (mostContenido)cout << content << endl;
 }
 
 bool email::operator==(const email &E) {
@@ -20,28 +21,4 @@ void email::operator=(const email &E) {
     date = E.date;
     subject = E.subject;
     content = E.content;
-}
-
-string email::gringa(string O) {
-    string R = "";
-    R += O[6];
-    R += O[7];
-    R += "/";
-    R += O[4];
-    R += O[5];
-    R += "/";
-    R += O[0];
-    R += O[1];
-    R += O[2];
-    R += O[3];
-    R += " ";
-    R += O[8];
-    R += O[9];
-    R += ':';
-    R += O[10];
-    R += O[11];
-    R += ':';
-    R += O[12];
-    R += O[13];
-    return R;
 }

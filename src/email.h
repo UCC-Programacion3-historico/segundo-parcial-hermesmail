@@ -20,15 +20,13 @@ public:
     string subject;
     string content;
 
-    void imprimir();
+    void imprimir(bool,bool);
 
     bool operator==(const email &);
 
     bool operator!=(const email &);
 
     void operator=(const email &);
-
-    string gringa(string);
 };
 
 

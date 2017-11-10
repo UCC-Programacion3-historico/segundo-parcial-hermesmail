@@ -28,6 +28,8 @@ private:
     string corrige(string);
     //metodo que filtra los caracteres que no son letras ni numeros
 
+    bool fechaValida(string);
+
 
 public:
     MailManager();
