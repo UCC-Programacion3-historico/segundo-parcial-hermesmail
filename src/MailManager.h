@@ -20,15 +20,16 @@ private:
     ArbolBinarioConLista<string, Nodo<email> *> arbol_Diccionario;
     //Arbol binario que almacena las palabras de los emails ordenandos alfabeticamente
     ArbolBinarioConLista<string, Nodo<email> *> arbol_Fecha;
-    //Arbol binario que almacena las fechas de los emails ordenandos cronologicamente
 
+    //Arbol binario que almacena las fechas de los emails ordenandos cronologicamente
     string bobfara(string);
 
-    //funcion que calcula el bobfara a 9 de un numero
+    //metodo que calcula el bobfara a 9 de un numero
     string corrige(string);
-    //metodo que filtra los caracteres que no son letras ni numeros
 
+    //metodo que filtra los caracteres que no son letras ni numeros
     bool fechaValida(string);
+    //metodo que que valida fechas ingresadas
 
 
 public:
@@ -47,6 +48,22 @@ public:
     vector<email> getByFrom(string from);
 
     vector<email> getByQuery(string query);
+
+    void printArbolIDs() {
+        this->arbol_ID.print();
+    }
+
+    void printArbolFechas() {
+        this->arbol_Fecha.print();
+    }
+
+    void printArbolRemitentes() {
+        this->arbol_Remitentes.print();
+    }
+
+    void printArbolPalabras() {
+        this->arbol_Diccionario.print();
+    }
 };
 
 #endif // MAILMANAGER_H

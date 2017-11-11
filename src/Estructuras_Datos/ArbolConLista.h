@@ -27,6 +27,8 @@ public:
     bool esVacio();
 
     Lista<K> &getLista(T);
+
+    void print();
 };
 
 template<class T, class K>
@@ -83,6 +85,12 @@ Lista<K> &ArbolBinarioConLista<T, K>::getLista(T d) {
     if (raiz != nullptr)
         return raiz->getLista(d);
     throw -5;
+}
+
+template<class T, class K>
+void ArbolBinarioConLista<T, K>::print() {
+    if (raiz != nullptr)
+        raiz->print(false, "");
 }
 
 #endif //MAILMANAGER_ARBOL_H

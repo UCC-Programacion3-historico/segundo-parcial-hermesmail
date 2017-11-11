@@ -10,8 +10,6 @@ using namespace std;
  * Clase con los datos del mail
  */
 class email {
-private:
-//    string gringa(string);
 public:
     unsigned long id;
     string from;
@@ -20,7 +18,7 @@ public:
     string subject;
     string content;
 
-    void imprimir(bool,bool);
+    void imprimir(bool, bool);
 
     bool operator==(const email &);
 

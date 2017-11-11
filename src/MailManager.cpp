@@ -43,7 +43,6 @@ void MailManager::deleteMail(unsigned long id) {
     //apunta al que queremos eliminar de la lista principal
     string tmpFecha = bobfara(aEliminar->getDato().date);
     string tmpRemitente = aEliminar->getDato().from;
-
     arbol_Fecha.remove(tmpFecha, aEliminar);
     arbol_Remitentes.remove(tmpRemitente, aEliminar);
 

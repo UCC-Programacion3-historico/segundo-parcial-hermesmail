@@ -5,7 +5,6 @@
 int main() {
     cout << "-----------------INICIANDO HERMES MAIL-----------------" << endl;
     MailManager MM;
-
     vector<email> mails = load_mm("../test/mails-3001.txt");
 
     for (int j = 0; j < mails.size(); ++j)
@@ -13,7 +12,7 @@ int main() {
 
     bool mostContenido = false;
     bool mostID = false;
-    int n, i, config;
+    int n, i, config, imp;
     unsigned long ID;
     vector<email> v;
     string anio, mes, dia, desde, hasta, rem, pal;
@@ -26,7 +25,8 @@ int main() {
              << " 5)Buscar mails por palabra" << endl
              << " 6)Eliminar mail" << endl
              << " 7)Configuraciones" << endl
-             << " 8)Salir" << endl;
+             << " 8)Imprimir arboles" << endl
+             << " 9)Salir" << endl;
         cin >> n;
         switch (n) {
             case 1:
@@ -147,6 +147,7 @@ int main() {
                 cin >> ID;
                 try {
                     MM.deleteMail(ID);
+                    cout << "\nMail ID:" << ID << " eliminado\n";
                 } catch (int e) {
                     if (e == -5)
                         cout << "\nNo se encontro email con el ID ingresado\n";
@@ -189,13 +190,51 @@ int main() {
                 break;
 
             case 8:
+                do {
+                    cout << endl << "Seleccione una opcion:" << endl
+                         << " 1)Imprimir arbol de IDs" << endl
+                         << " 2)Imprimir arbol de Fechas" << endl
+                         << " 3)Imprimir arbol de Remitentes" << endl
+                         << " 4)Imprimir arbol de Palabras" << endl
+                         << " 5)Volver" << endl;
+                    cin >> imp;
+                    switch (imp) {
+                        case 1:
+                            cout << endl << endl;
+                            MM.printArbolIDs();
+                            cout << endl << endl;
+                            break;
+                        case 2:
+                            cout << endl << endl;
+                            MM.printArbolFechas();
+                            cout << endl << endl;
+                            break;
+                        case 3:
+                            cout << endl << endl;
+                            MM.printArbolRemitentes();
+                            cout << endl << endl;
+                            break;
+                        case 4:
+                            cout << endl << endl;
+                            MM.printArbolPalabras();
+                            cout << endl << endl;
+                            break;
+                        case 5:
+                            break;
+                        default:
+                            cout << "\nOpcion incorrecta\n";
+                            break;
+                    }
+                } while (imp != 5);
+                break;
+            case 9:
                 break;
 
             default:
                 cout << "\nOpcion incorrecta\n";
                 break;
         }
-    } while (n != 8);
+    } while (n != 9);
     cout << endl << "-----------------GRACIAS POR USAR HERMES MAIL-----------------" << endl;
     return 0;
 }

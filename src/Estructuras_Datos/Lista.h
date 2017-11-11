@@ -18,16 +18,12 @@ public:
 
     bool esVacia();
 
-    int getTamanio();
-
     Nodo<T> *getInicio() const;
 
     void insertarPrimero(T);
     //Es mas eficiente insertar al principio que al final
 
     void remover(T);
-
-    //T getDato(unsigned int);
 };
 
 
@@ -52,17 +48,6 @@ Lista<T>::~Lista() {
 template<class T>
 bool Lista<T>::esVacia() {
     return inicio == nullptr;
-}
-
-template<class T>
-int Lista<T>::getTamanio() {
-    Nodo<T> *aux = inicio;
-    int cont = 0;
-    while (aux != nullptr) {
-        cont++;
-        aux = aux->getNext();
-    }
-    return cont;
 }
 
 template<class T>
