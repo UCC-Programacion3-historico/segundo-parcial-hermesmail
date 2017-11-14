@@ -12,8 +12,9 @@ MailManager::MailManager() {
  * @param m mail a agregar
  */
 void MailManager::addMail(email m) {
-    lista_Emails.insertarPrimero(m);
-    Nodo<email> *tmpInicio = lista_Emails.getInicio();
+     email* tmpInicio=new email;
+     *tmpInicio=m;
+
     arbol_ID.put(m.id, tmpInicio);
     arbol_Remitentes.put(m.from, tmpInicio);
     arbol_Fecha.put(bobfara(m.date), tmpInicio);
@@ -39,14 +40,14 @@ void MailManager::addMail(email m) {
  * @param id identificador del mail a borrar
  */
 void MailManager::deleteMail(unsigned long id) {
-    Nodo<email> *aEliminar = arbol_ID.getLista(id).getInicio()->getDato();
+    email *aEliminar = arbol_ID.getLista(id).getInicio()->getDato();
     //apunta al que queremos eliminar de la lista principal
-    string tmpFecha = bobfara(aEliminar->getDato().date);
-    string tmpRemitente = aEliminar->getDato().from;
+    string tmpFecha = bobfara(aEliminar->date);
+    string tmpRemitente = aEliminar->from;
     arbol_Fecha.remove(tmpFecha, aEliminar);
     arbol_Remitentes.remove(tmpRemitente, aEliminar);
 
-    string tmpTexto = aEliminar->getDato().subject + ' ' + aEliminar->getDato().content + ' ' + '\0';
+    string tmpTexto = aEliminar->subject + ' ' + aEliminar->content + ' ' + '\0';
     int i = 0;
     while (tmpTexto[i] != '\0') {
         string palabra = "";
@@ -63,7 +64,7 @@ void MailManager::deleteMail(unsigned long id) {
     }
 
     arbol_ID.remove(id, aEliminar);
-    lista_Emails.remover(aEliminar->getDato());
+    delete aEliminar;
 }
 
 
@@ -72,12 +73,12 @@ void MailManager::deleteMail(unsigned long id) {
  * @return lista de mails ordenados
  */
 vector<email> MailManager::getSortedByDate() {
+    vector<email *> tmp;
     vector<email> ret;
-    vector<Nodo<email> *> tmp;
     arbol_Fecha.inorder(tmp);
     unsigned long size = tmp.size();
     for (int i = 0; i < size; ++i) {
-        ret.push_back(tmp[size - 1 - i]->getDato());
+        ret.push_back(*tmp[size - 1 - i]);
     }
     return ret;
 }
@@ -99,12 +100,12 @@ vector<email> MailManager::getSortedByDate(string desde, string hasta) {
         throw -20;
     if (atoi(hasta.c_str()) < atoi(desde.c_str()))          //hasta es menor a desde
         throw -8;
-    vector<Nodo<email> *> tmp;
+    vector<email *> tmp;
     vector<email> ret;
     arbol_Fecha.inorderRango(tmp, bobfara(desde), bobfara(hasta));
     unsigned long size = tmp.size();
     for (int i = 0; i < size; ++i)
-        ret.push_back(tmp[size - 1 - i]->getDato());
+        ret.push_back(*tmp[size - 1 - i]);
     return ret;
 }
 
@@ -115,10 +116,10 @@ vector<email> MailManager::getSortedByDate(string desde, string hasta) {
  */
 vector<email> MailManager::getSortedByFrom() {
     vector<email> ret;
-    vector<Nodo<email> *> tmp;
+    vector<email *> tmp;
     arbol_Remitentes.inorder(tmp);
     for (int i = 0; i < tmp.size(); ++i)
-        ret.push_back(tmp[i]->getDato());
+        ret.push_back(*tmp[i]);
     return ret;
 }
 
@@ -130,9 +131,9 @@ vector<email> MailManager::getSortedByFrom() {
  */
 vector<email> MailManager::getByFrom(string from) {
     vector<email> ret;
-    Nodo<Nodo<email> *> *R = arbol_Remitentes.getLista(from).getInicio();
+    Nodo<email *> *R = arbol_Remitentes.getLista(from).getInicio();
     while (R != nullptr) {
-        ret.push_back(R->getDato()->getDato());
+        ret.push_back(*R->getDato());
         R = R->getNext();
     }
     return ret;
@@ -157,9 +158,9 @@ vector<email> MailManager::getByQuery(string query) {
     }
 
     if (palabra != "") {
-        Nodo<Nodo<email> *> *R = arbol_Diccionario.getLista(palabra).getInicio();
+        Nodo<email *> *R = arbol_Diccionario.getLista(palabra).getInicio();
         while (R != nullptr) {
-            ret.push_back(R->getDato()->getDato());
+            ret.push_back(*R->getDato());
             R = R->getNext();
         }
     }

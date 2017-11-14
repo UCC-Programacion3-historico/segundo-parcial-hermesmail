@@ -11,11 +11,6 @@ private:
     NodoArbolConLista<T, K> *izq, *der;
     T dato;
     Lista<K> listaPtr;
-    int bal;
-
-    int altura();
-
-    void actualizarEstado();
 
 public:
 
@@ -48,7 +43,6 @@ NodoArbolConLista<T, K>::NodoArbolConLista(T dato, K ptr) {
     this->listaPtr.insertarPrimero(ptr);
     izq = nullptr;
     der = nullptr;
-    bal = 0;
 }
 
 template<class T, class K>
@@ -189,33 +183,6 @@ void NodoArbolConLista<T, K>::vaciar() {
 };
 
 template<class T, class K>
-int NodoArbolConLista<T, K>::altura() {
-    int left, right;
-
-    if (izq == nullptr && der == nullptr)
-        return 0;
-
-    if (izq == nullptr)
-        return 1 + der->altura();
-
-    if (der == nullptr)
-        return 1 + izq->altura();
-
-    left = this->izq->altura();
-    right = this->der->altura();
-
-    if (left > right)
-        return left + 1;
-    else
-        return right + 1;
-}
-
-template<class T, class K>
-void NodoArbolConLista<T, K>::actualizarEstado() {
-    this->bal = izq->altura() - der->altura();
-}
-
-template<class T, class K>
 void NodoArbolConLista<T, K>::print(bool esDerecho, string identacion) {
     if (der != nullptr) {
         der->print(true, identacion + (esDerecho ? "     " : "|    "));
@@ -231,17 +198,6 @@ void NodoArbolConLista<T, K>::print(bool esDerecho, string identacion) {
     if (izq != nullptr) {
         izq->print(false, identacion + (esDerecho ? "|    " : "     "));
     }
-}
-
-template<class T, class K>
-void NodoArbolConLista<T, K>::rotacionSimpleIzquierda() {
-    NodoArbolConLista<T, K> *aux = this;
-    this->izq;
-//    aux->der = raiz->izq;
-//    raiz->izq = aux;
-//    // actualizamos los balances, según la fórmula
-//    aux->bal -= 1 +  max( raiz->bal, 0 );
-//    raiz->bal -= 1 -  min( aux->bal, 0 );
 }
 
 #endif //MAILMANAGER_NODOARBOLCONLISTA_H
