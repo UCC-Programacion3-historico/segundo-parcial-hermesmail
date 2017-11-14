@@ -12,8 +12,8 @@ MailManager::MailManager() {
  * @param m mail a agregar
  */
 void MailManager::addMail(email m) {
-     email* tmpInicio=new email;
-     *tmpInicio=m;
+    email *tmpInicio = new email;
+    *tmpInicio = m;
 
     arbol_ID.put(m.id, tmpInicio);
     arbol_Remitentes.put(m.from, tmpInicio);
@@ -44,8 +44,8 @@ void MailManager::deleteMail(unsigned long id) {
     //apunta al que queremos eliminar de la lista principal
     string tmpFecha = bobfara(aEliminar->date);
     string tmpRemitente = aEliminar->from;
-    arbol_Fecha.remove(tmpFecha, aEliminar);
-    arbol_Remitentes.remove(tmpRemitente, aEliminar);
+    arbol_Fecha.remover(tmpFecha, aEliminar);
+    arbol_Remitentes.remover(tmpRemitente, aEliminar);
 
     string tmpTexto = aEliminar->subject + ' ' + aEliminar->content + ' ' + '\0';
     int i = 0;
@@ -58,12 +58,12 @@ void MailManager::deleteMail(unsigned long id) {
         }
         if (palabra != "")
             try {
-                arbol_Diccionario.remove(palabra, aEliminar);
+                arbol_Diccionario.remover(palabra, aEliminar);
             } catch (int e) {}
         i++;
     }
 
-    arbol_ID.remove(id, aEliminar);
+    arbol_ID.remover(id, aEliminar);
     delete aEliminar;
 }
 

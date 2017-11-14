@@ -18,7 +18,7 @@ public:
 
     void put(T, K);
 
-    void remove(T, K);
+    void remover(T, K);
 
     void inorder(vector<K> &);
 
@@ -49,18 +49,17 @@ void ArbolBinarioConLista<T, K>::put(T dato, K ptr) {
     if (raiz == nullptr) {
         raiz = new NodoArbolConLista<T, K>(dato, ptr);
     } else {
-        raiz->put(dato, ptr);
+//        NodoArbolConLista<T, K> *NN = new NodoArbolConLista<T, K>(dato);
+//        raiz = raiz->put(NN);
+        raiz = raiz->put(dato, ptr);
     }
 }
 
 template<class T, class K>
-void ArbolBinarioConLista<T, K>::remove(T dato, K ptr) {
-    NodoArbolConLista<T, K> *aux;
-    if (raiz == nullptr)throw 1;
-    aux = raiz;
-    raiz = raiz->remover(dato, ptr);
-    if (raiz != aux)
-        delete aux;
+void ArbolBinarioConLista<T, K>::remover(T dato, K ptr) {
+    if (this->raiz == nullptr)
+        throw -1;
+    this->raiz = this->raiz->remover(dato, ptr);
 }
 
 template<class T, class K>
