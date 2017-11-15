@@ -49,9 +49,9 @@ void ArbolBinarioConLista<T, K>::put(T dato, K ptr) {
     if (raiz == nullptr) {
         raiz = new NodoArbolConLista<T, K>(dato, ptr);
     } else {
-//        NodoArbolConLista<T, K> *NN = new NodoArbolConLista<T, K>(dato);
-//        raiz = raiz->put(NN);
-        raiz = raiz->put(dato, ptr);
+        NodoArbolConLista<T, K> *NN = new NodoArbolConLista<T, K>(dato, ptr);
+        raiz = raiz->put(NN);
+//        raiz = raiz->put(dato, ptr);
     }
 }
 

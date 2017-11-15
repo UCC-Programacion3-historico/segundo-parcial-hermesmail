@@ -35,9 +35,9 @@ public:
 
     T getDato();
 
-//    NodoArbolConLista<T, K> *put(NodoArbolConLista<T, K> *);
+    NodoArbolConLista<T, K> *put(NodoArbolConLista<T, K> *);
 
-    NodoArbolConLista<T, K> *put(T, K);
+//    NodoArbolConLista<T, K> *put(T, K);
 
     NodoArbolConLista<T, K> *remover(T, K);
 
@@ -67,35 +67,37 @@ T NodoArbolConLista<T, K>::getDato() {
 }
 
 template<class T, class K>
-//NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::put(NodoArbolConLista<T, K> *NN) {
-NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::put(T dato, K ptr) {
+NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::put(NodoArbolConLista<T, K> *NN) {
+//NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::put(T dato, K ptr) {
 //    if (ptr == nullptr)return;   no se que pasa aca
-    if (this->dato == dato) {
-        if (this->listaPtr.getInicio()->getDato() != ptr)
-            this->listaPtr.insertarPrimero(ptr);
-    } else {
-        if (this->dato > dato) {
-            if (this->izq == nullptr) {
-                this->izq = new NodoArbolConLista<T, K>(dato, ptr);
-                if (this->der != nullptr)       //calculo de balance para evitar la recursividad
-                    this->balance = 0;
-                else
-                    this->balance = -1;
-            } else {
-                this->izq = this->izq->put(dato, ptr);
-                return balancearNodo(this);
-            }
+    if (this->dato == NN->dato) {
+        if (this->listaPtr.getInicio()->getDato() != NN->listaPtr.getInicio()->getDato())
+            this->listaPtr.insertarPrimero(NN->listaPtr.getInicio()->getDato());
+        return this;
+    }
+    if (this->dato > NN->dato) {
+        if (this->izq == nullptr) {
+            this->izq = NN;
+//                if (this->der != nullptr)       //calculo de balance para evitar la recursividad
+//                    this->balance = 0;
+//                else
+//                    this->balance = -1;
+            this->balance = calculaBalance(this);
         } else {
-            if (this->der == nullptr) {
-                this->der = new NodoArbolConLista<T, K>(dato, ptr);
-                if (this->izq != nullptr)
-                    this->balance = 0;
-                else
-                    this->balance = 1;
-            } else {
-                this->der = this->der->put(dato, ptr);
-                return balancearNodo(this);
-            }
+            this->izq = this->izq->put(NN);
+            return balancearNodo(this);
+        }
+    } else {
+        if (this->der == nullptr) {
+            this->der = NN;
+//                if (this->izq != nullptr)
+//                    this->balance = 0;
+//                else
+//                    this->balance = 1;
+            this->balance = calculaBalance(this);
+        } else {
+            this->der = this->der->put(NN);
+            return balancearNodo(this);
         }
     }
 }
@@ -258,10 +260,8 @@ template<class T, class K>
 int NodoArbolConLista<T, K>::altura() {
     int left, right;
 
-    if (this->izq == nullptr /*&& this->der == nullptr*/)
-//        return 1;
-        if (this->der == nullptr)
-            return 1;
+    if (this->izq == nullptr && this->der == nullptr)
+        return 1;
 
     if (this->izq == nullptr)
         return 1 + this->der->altura();

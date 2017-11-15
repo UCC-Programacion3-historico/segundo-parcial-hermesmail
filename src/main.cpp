@@ -8,10 +8,12 @@ inline void bienvenida();
 int main() {
     bienvenida();
     MailManager MM;
-    vector<email> mails = load_mm("../test/mails-2.txt");
+    vector<email> mails = load_mm("../test/mails-3001.txt");
 
     for (int j = 0; j < mails.size(); ++j) {
         MM.addMail(mails[j]);
+        mails[j].imprimir(false, false);
+        cout << endl << j << endl;
     }
 
     bool mostContenido = false;
