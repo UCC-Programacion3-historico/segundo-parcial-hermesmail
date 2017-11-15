@@ -33,8 +33,6 @@ public:
     void vaciar();
 
     void print(bool, string);
-
-    void rotacionSimpleIzquierda();
 };
 
 template<class T, class K>
@@ -94,7 +92,7 @@ template<class T, class K>
 NodoArbolConLista<T, K> *NodoArbolConLista<T, K>::remover(T d, K ptr) {
     NodoArbolConLista<T, K> *aux;
     if (d == dato) {
-        this->listaPtr.remover(ptr);   //T de esta lista Nodo<email> *
+        this->listaPtr.remover(ptr);
         if (listaPtr.esVacia()) {
             if (der != nullptr) {
                 der->put(izq);

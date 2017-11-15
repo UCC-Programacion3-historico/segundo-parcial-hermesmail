@@ -17,10 +17,7 @@ private:
     ArbolBinarioConLista<string, email *> arbol_Fecha;
 
     string bobfara(string);
-    //metodo que calcula el bobfara a 9 de un numero
-
-    string corrige(string);
-    //metodo que filtra los caracteres que no son letras ni numeros
+    //metodo que corta strings
 
     bool fechaValida(string);
     //metodo que que valida fechas ingresadas

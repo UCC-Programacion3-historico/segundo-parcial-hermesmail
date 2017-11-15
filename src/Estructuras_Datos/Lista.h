@@ -21,7 +21,6 @@ public:
     Nodo<T> *getInicio() const;
 
     void insertarPrimero(T);
-    //Es mas eficiente insertar al principio que al final
 
     void remover(T);
 

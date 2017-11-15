@@ -2,7 +2,6 @@
 #include "MailManager.h"
 #include "lectorDeMails.h"
 
-
 inline void bienvenida();
 
 int main() {
