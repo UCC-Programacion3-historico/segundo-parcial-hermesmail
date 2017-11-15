@@ -16,7 +16,7 @@ private:
     ArbolBinarioConLista<string, email *> arbol_Diccionario;
     ArbolBinarioConLista<string, email *> arbol_Fecha;
 
-    string bobfara(string);
+    string stringcut(string);
     //metodo que corta strings
 
     bool fechaValida(string);

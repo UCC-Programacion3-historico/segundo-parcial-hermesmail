@@ -17,7 +17,7 @@ void MailManager::addMail(email m) {
 
     arbol_ID.put(m.id, tmpInicio);
     arbol_Remitentes.put(m.from, tmpInicio);
-    arbol_Fecha.put(bobfara(m.date), tmpInicio);
+    arbol_Fecha.put(stringcut(m.date), tmpInicio);
 
     string tmpTexto = m.subject + ' ' + m.content + ' ' + '\0';
     int i = 0;
@@ -42,7 +42,7 @@ void MailManager::addMail(email m) {
 void MailManager::deleteMail(unsigned long id) {
     email *aEliminar = arbol_ID.getLista(id).getInicio()->getDato();
     //apunta al que queremos eliminar de la lista principal
-    string tmpFecha = bobfara(aEliminar->date);
+    string tmpFecha = stringcut(aEliminar->date);
     string tmpRemitente = aEliminar->from;
     arbol_Fecha.remove(tmpFecha, aEliminar);
     arbol_Remitentes.remove(tmpRemitente, aEliminar);
@@ -102,7 +102,7 @@ vector<email> MailManager::getSortedByDate(string desde, string hasta) {
         throw -8;
     vector<email *> tmp;
     vector<email> ret;
-    arbol_Fecha.inorderRango(tmp, bobfara(desde), bobfara(hasta));
+    arbol_Fecha.inorderRango(tmp, stringcut(desde), stringcut(hasta));
     unsigned long size = tmp.size();
     for (int i = 0; i < size; ++i)
         ret.push_back(*tmp[size - 1 - i]);
@@ -168,9 +168,9 @@ vector<email> MailManager::getByQuery(string query) {
 }
 
 
-string MailManager::bobfara(string c) {
+string MailManager::stringcut(string c) {
     string R = "";
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 16; ++i)        //10 para fechas, 16 para minutos, 19 para segundos
         R += c[i];
     return R;
 }
