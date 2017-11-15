@@ -24,6 +24,8 @@ public:
     //Es mas eficiente insertar al principio que al final
 
     void remover(T);
+
+    void vaciar();
 };
 
 
@@ -34,6 +36,12 @@ Lista<T>::Lista() {
 
 template<class T>
 Lista<T>::~Lista() {
+    vaciar();
+
+}
+
+template<class T>
+void Lista<T>::vaciar() {
     Nodo<T> *borr;
     Nodo<T> *aux = inicio;
 

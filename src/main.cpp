@@ -63,7 +63,9 @@ int main() {
                 while (dia.size() < 2)
                     dia = "0" + dia;
                 desde += anio;
+                desde += '-';
                 desde += mes;
+                desde += '-';
                 desde += dia;
                 cout << endl << "Ingrese hasta que fecha buscar:";
                 cout << endl << " Ingrese anio: " << endl;
@@ -79,7 +81,9 @@ int main() {
                 while (dia.size() < 2)
                     dia = "0" + dia;
                 hasta += anio;
+                hasta += '-';
                 hasta += mes;
+                hasta += '-';
                 hasta += dia;
                 try {
                     v = MM.getSortedByDate(desde, hasta);
@@ -109,7 +113,6 @@ int main() {
                 else {
                     for (i = 0; i < v.size(); ++i)
                         v[i].imprimir(mostID, mostContenido);
-                    cout << i << endl;
                 }
                 break;
 
@@ -120,7 +123,6 @@ int main() {
                     v = MM.getByFrom(rem);
                     for (i = 0; i < v.size(); ++i)
                         v[i].imprimir(mostID, mostContenido);
-                    cout << i << endl;
                 } catch (int e) {
                     if (e == -5)
                         cout << "\nNo hay emails\n";
@@ -136,7 +138,6 @@ int main() {
                     v = MM.getByQuery(pal);
                     for (i = 0; i < v.size(); ++i)
                         v[i].imprimir(mostID, mostContenido);
-                    cout << i << endl;
                 } catch (int e) {
                     if (e == -5)
                         cout << "\nNo hay emails\n";

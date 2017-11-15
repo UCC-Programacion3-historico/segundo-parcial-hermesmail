@@ -177,10 +177,10 @@ string MailManager::bobfara(string c) {
 
 bool MailManager::fechaValida(string fecha) {
     string d = "", m = "", a = "";
-    d += fecha[6];
-    d += fecha[7];
-    m += fecha[4];
+    d += fecha[8];
+    d += fecha[9];
     m += fecha[5];
+    m += fecha[6];
     a += fecha[0];
     a += fecha[1];
     a += fecha[2];

@@ -179,6 +179,7 @@ void NodoArbolConLista<T, K>::vaciar() {
         izq->vaciar();
     if (der != nullptr)
         der->vaciar();
+    this->listaPtr.vaciar();
     delete this;
 };
 
